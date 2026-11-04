@@ -1,0 +1,340 @@
+"use client";
+
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent as RMouseEvent,
+  type PointerEvent as RPointerEvent,
+  type TransitionEvent as RTransitionEvent,
+} from "react";
+import ProjectArt from "./ProjectArt";
+import { Reveal } from "./ui";
+import { disciplines, projectTypes, projects, type Discipline, type Project, type ProjectType } from "@/data/content";
+
+const AUTOPLAY = 3800;
+
+export default function Works() {
+  const [discipline, setDiscipline] = useState<Discipline | null>(null);
+  const [type, setType] = useState<ProjectType | null>(null);
+
+  const filtered = useMemo(
+    () =>
+      projects.filter(
+        (p) => (!discipline || p.disciplines.includes(discipline)) && (!type || p.types.includes(type)),
+      ),
+    [discipline, type],
+  );
+
+  const countD = (d: Discipline) => projects.filter((p) => p.disciplines.includes(d)).length;
+  const countT = (t: ProjectType) => projects.filter((p) => p.types.includes(t)).length;
+  const reset = () => {
+    setDiscipline(null);
+    setType(null);
+  };
+
+  return (
+    <section id="trabajos" className="section works">
+      <div className="container">
+        <Reveal as="h2" className="section-title" variant="mask">
+          <span>
+            trabajos <span className="thin">seleccionados</span>
+            <sup>{filtered.length}</sup>
+          </span>
+        </Reveal>
+
+        <Reveal className="filters" delay={100}>
+          <p>
+            Como desarrolladora creativa, hago{" "}
+            {disciplines.map((d) => (
+              <button
+                key={d}
+                className={`chip ${discipline === d ? "is-active" : ""}`}
+                onClick={() => setDiscipline(discipline === d ? null : d)}
+                aria-pressed={discipline === d}
+              >
+                {d}
+                <sup>{countD(d)}</sup>
+              </button>
+            ))}{" "}
+            para{" "}
+            {projectTypes.map((t) => (
+              <button
+                key={t}
+                className={`chip ${type === t ? "is-active" : ""}`}
+                onClick={() => setType(type === t ? null : t)}
+                aria-pressed={type === t}
+              >
+                {t}
+                <sup>{countT(t)}</sup>
+              </button>
+            ))}
+            {(discipline || type) && (
+              <button className="chip chip--reset" onClick={reset}>
+                ver todo ×
+              </button>
+            )}
+          </p>
+        </Reveal>
+
+        {filtered.length === 0 ? (
+          <p className="works__empty">
+            Nada por acá con esa combinación todavía.{" "}
+            <button className="link" onClick={reset}>
+              Ver todo
+            </button>
+          </p>
+        ) : (
+          <Carousel items={filtered} key={`${discipline ?? "all"}-${type ?? "all"}`} />
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ───────────────────────── Carrusel ─────────────────────────
+   - Autoplay infinito (se pausa con el mouse encima, al arrastrar,
+     fuera de pantalla o con la pestaña oculta).
+   - Arrastre / swipe con el mouse o el dedo.
+   - La card que entra en foco "arma" su composición geométrica.
+*/
+
+function Carousel({ items }: { items: Project[] }) {
+  const n = items.length;
+  const viewport = useRef<HTMLDivElement>(null);
+  const [per, setPer] = useState(3); // cards visibles (según CSS)
+  const [step, setStep] = useState(0); // ancho de card + gap en px
+  const loop = n > Math.floor(per);
+  const slides = loop ? [...items, ...items, ...items] : items;
+
+  const [index, setIndex] = useState(loop ? n : 0);
+  const [animate, setAnimate] = useState(true);
+  const [drag, setDrag] = useState(0);
+  const [hover, setHover] = useState(false);
+  const [inView, setInView] = useState(false);
+  const [measured, setMeasured] = useState(false);
+  const dragState = useRef<{ x: number; y: number; moved: boolean; active: boolean }>({ x: 0, y: 0, moved: false, active: false });
+
+  // medir
+  useEffect(() => {
+    const el = viewport.current;
+    if (!el) return;
+    const measure = () => {
+      const card = el.querySelector<HTMLElement>(".slide");
+      const gap = parseFloat(getComputedStyle(el).getPropertyValue("--gap")) || 24;
+      const p = parseFloat(getComputedStyle(el).getPropertyValue("--per")) || 3;
+      setPer(p);
+      if (card) setStep(card.offsetWidth + gap);
+    };
+    measure();
+    const raf = requestAnimationFrame(() => requestAnimationFrame(() => setMeasured(true)));
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.3 });
+    io.observe(el);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      io.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    setIndex(loop ? n : 0);
+  }, [loop, n]);
+
+  const go = useCallback(
+    (delta: number) => {
+      setAnimate(true);
+      setIndex((i) => {
+        if (loop) return i + delta;
+        const max = Math.max(0, n - Math.floor(per));
+        return Math.min(max, Math.max(0, i + delta));
+      });
+    },
+    [loop, n, per],
+  );
+
+  // al terminar la transición, si salimos de la copia del medio, saltamos sin animación
+  const onTransitionEnd = (e: RTransitionEvent) => {
+    if (e.target !== e.currentTarget || !loop) return;
+    if (index >= 2 * n || index < n) {
+      setAnimate(false);
+      setIndex(((index % n) + n) % n + n);
+    }
+  };
+  useEffect(() => {
+    if (animate) return;
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => setAnimate(true)));
+    return () => cancelAnimationFrame(id);
+  }, [animate]);
+
+  // autoplay
+  const playing = loop && inView && !hover && !dragState.current.active;
+  useEffect(() => {
+    if (!playing) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    const t = setTimeout(() => go(1), AUTOPLAY);
+    return () => clearTimeout(t);
+  }, [playing, index, go]);
+
+  // arrastre
+  const onPointerDown = (e: RPointerEvent) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    dragState.current = { x: e.clientX, y: e.clientY, moved: false, active: true };
+    setAnimate(false);
+  };
+  const onPointerMove = (e: RPointerEvent) => {
+    const s = dragState.current;
+    if (!s.active) return;
+    const dx = e.clientX - s.x;
+    const dy = e.clientY - s.y;
+    if (!s.moved && Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) {
+      // scroll vertical: soltamos
+      s.active = false;
+      setAnimate(true);
+      setDrag(0);
+      return;
+    }
+    if (Math.abs(dx) > 6) {
+      s.moved = true;
+      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    }
+    if (s.moved) setDrag(loop || (index > 0 && dx > 0) || dx < 0 ? dx : dx * 0.3);
+  };
+  const endDrag = () => {
+    const s = dragState.current;
+    if (!s.active) return;
+    s.active = false;
+    setAnimate(true);
+    if (step && Math.abs(drag) > step * 0.18) {
+      const count = Math.max(1, Math.round(Math.abs(drag) / step));
+      go(drag < 0 ? count : -count);
+    }
+    setDrag(0);
+  };
+  const onClickCapture = (e: RMouseEvent) => {
+    if (dragState.current.moved) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragState.current.moved = false;
+    }
+  };
+
+  const visible = Math.max(1, Math.floor(per));
+  const current = ((index % n) + n) % n;
+  const x = -index * step + drag;
+
+  return (
+    <div className="carousel">
+      <div
+        className={`carousel__viewport ${dragState.current.active && drag ? "is-dragging" : ""}`}
+        ref={viewport}
+        onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
+        onPointerLeave={(e) => e.pointerType === "mouse" && setHover(false)}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onClickCapture={onClickCapture}
+        aria-roledescription="carrusel"
+        aria-label="Trabajos seleccionados"
+      >
+        <div
+          className={`carousel__track ${animate && measured && !drag ? "" : "no-anim"}`}
+          style={{ transform: `translate3d(${x}px,0,0)` }}
+          onTransitionEnd={onTransitionEnd}
+        >
+          {slides.map((p, i) => {
+            const inFocus = i >= index && i < index + visible;
+            const lead = i === index;
+            return (
+              <div
+                className={`slide ${inFocus ? "is-visible" : ""} ${lead ? "is-lead" : ""}`}
+                key={`${p.slug}-${i}`}
+                aria-hidden={!inFocus}
+                style={{ "--d": `${(i - index) * 70}ms` } as CSSProperties}
+              >
+                <ProjectCard project={p} number={(i % n) + 1} focusable={inFocus} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {(loop || n > visible) && (
+        <div className="carousel__controls">
+          <div className="carousel__count">
+            <strong>{String(current + 1).padStart(2, "0")}</strong>
+            <span> / {String(n).padStart(2, "0")}</span>
+          </div>
+
+          <div className="carousel__bar" aria-hidden="true">
+            {items.map((p, i) => (
+              <span key={p.slug} className={i === current ? "is-on" : i < current ? "is-done" : ""}>
+                {i === current && playing && <i key={index} style={{ animationDuration: `${AUTOPLAY}ms` }} />}
+              </span>
+            ))}
+          </div>
+
+          <div className="carousel__arrows">
+            <button className="arrow" onClick={() => go(-1)} aria-label="Trabajo anterior" disabled={!loop && index === 0}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 4 7 12l8 8" />
+              </svg>
+            </button>
+            <button
+              className="arrow arrow--next"
+              onClick={() => go(1)}
+              aria-label="Trabajo siguiente"
+              disabled={!loop && index >= n - visible}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m9 4 8 8-8 8" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProjectCard({ project: p, number, focusable }: { project: Project; number: number; focusable: boolean }) {
+  return (
+    <a
+      href={p.href ?? "#contacto"}
+      className="card"
+      data-cursor="ver"
+      draggable={false}
+      tabIndex={focusable ? 0 : -1}
+      {...(p.href ? { target: "_blank", rel: "noreferrer" } : {})}
+    >
+      <div className="card__art">
+        <ProjectArt seed={p.seed} title={p.title} />
+        <span className="card__index">{String(number).padStart(2, "0")}</span>
+      </div>
+      <div className="card__meta">
+        <h3>
+          {p.title}
+          <span className="card__arrow" aria-hidden="true">
+            ↗
+          </span>
+        </h3>
+        <p className="card__client">
+          {p.client} · {p.year}
+        </p>
+        <p className="card__desc">{p.description}</p>
+        <ul className="card__tags">
+          {[...p.disciplines, ...p.types].map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
+      </div>
+    </a>
+  );
+}
