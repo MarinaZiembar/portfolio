@@ -517,11 +517,6 @@ main,
   font-size: clamp(58px, 11.2vw, 184px);
   line-height: 0.9;
 }
-.rt__hit {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
 .rt__line {
   display: flex;
   align-items: baseline;
@@ -556,30 +551,21 @@ main,
     transform 0.9s var(--ease),
     color 0.3s;
 }
-.rt__hit:hover ~ .rt__line .rt__plus {
-  color: var(--ink);
-}
-
-.rt__nav {
+/* Indicador de slides: formas geométricas + contador + barra de progreso */
+.snav {
   display: flex;
   align-items: center;
   gap: 18px;
-  margin-top: clamp(14px, 1.6vw, 24px);
   font-size: 13px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
-  opacity: 0;
-  transition: opacity 0.8s 0.5s var(--ease);
 }
-.rt.is-ready .rt__nav {
-  opacity: 1;
-}
-.rt__dots {
+.snav__dots {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
 }
-.rt__dot {
-  pointer-events: auto;
+.snav__dot {
   display: grid;
   place-items: center;
   width: 26px;
@@ -589,25 +575,35 @@ main,
     color 0.3s,
     transform 0.5s var(--ease);
 }
-.rt__dot .shape {
+.snav__dot .shape {
   width: 12px;
   height: 12px;
 }
-.rt__dot:hover {
+.snav__dot:hover {
   color: var(--ink);
 }
-.rt__dot.is-active {
+.snav__dot.is-active {
   color: var(--red);
   transform: rotate(90deg) scale(1.15);
 }
-.rt__bar {
+.snav__count {
+  white-space: nowrap;
+}
+.snav__count strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+.snav__count span {
+  color: var(--muted);
+}
+.snav__bar {
   position: relative;
   width: clamp(60px, 8vw, 120px);
   height: 2px;
   background: #e4e1dc;
   overflow: hidden;
 }
-.rt__bar i {
+.snav__bar i {
   position: absolute;
   inset: 0;
   background: var(--red);
@@ -642,52 +638,6 @@ main,
   font-size: 15px;
   line-height: 1.55;
   color: var(--ink-soft);
-}
-
-.hero__hint {
-  position: absolute;
-  top: 96px;
-  right: var(--gutter);
-  margin: 0;
-  font-size: 13px;
-  color: var(--muted);
-  pointer-events: none;
-}
-
-.scroll-badge {
-  position: absolute;
-  left: var(--gutter);
-  top: 92px;
-  width: 120px;
-  height: 120px;
-  display: grid;
-  place-items: center;
-}
-.scroll-badge svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  animation: spin 14s linear infinite;
-}
-.scroll-badge text {
-  font-size: 11.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  fill: var(--ink);
-  font-weight: 500;
-}
-.scroll-badge__core {
-  width: 34px;
-  height: 34px;
-  background: var(--red);
-  transition:
-    border-radius 0.5s var(--ease),
-    transform 0.5s var(--ease);
-}
-.scroll-badge:hover .scroll-badge__core {
-  border-radius: 50%;
-  transform: scale(1.25);
 }
 
 /* ── Buttons ──────────────────────────────── */
@@ -975,48 +925,14 @@ main,
   padding-top: 20px;
   border-top: 1px solid var(--line);
 }
-.carousel__count {
-  font-variant-numeric: tabular-nums;
-  font-size: 15px;
-  min-width: 64px;
-}
-.carousel__count strong {
-  font-size: 28px;
-  font-weight: 400;
-  letter-spacing: -0.03em;
-}
-.carousel__count span {
-  color: var(--muted);
-}
-.carousel__bar {
+.carousel__controls .snav {
   flex: 1;
-  display: flex;
-  gap: 6px;
-}
-.carousel__bar span {
-  position: relative;
-  flex: 1;
-  height: 2px;
-  background: #e4e1dc;
-  overflow: hidden;
-}
-.carousel__bar span.is-done,
-.carousel__bar span.is-on {
-  background: var(--ink);
-}
-.carousel__bar span.is-on {
-  background: #e4e1dc;
-}
-.carousel__bar i {
-  position: absolute;
-  inset: 0;
-  background: var(--red);
-  transform-origin: left;
-  animation: rtBar linear both;
+  min-width: 0;
 }
 .carousel__arrows {
   display: flex;
   gap: 8px;
+  margin-left: auto;
 }
 .arrow {
   display: grid;
@@ -1761,15 +1677,6 @@ main,
   .hero__cta {
     justify-self: start;
   }
-  .hero__hint {
-    display: none;
-  }
-  .scroll-badge {
-    display: none;
-  }
-  .scroll-badge text {
-    font-size: 13px;
-  }
   .about__grid {
     grid-template-columns: 1fr;
   }
@@ -1798,7 +1705,13 @@ main,
     --gap: 16;
   }
   .carousel__controls {
-    gap: 16px;
+    gap: 12px;
+  }
+  .carousel__controls .snav {
+    gap: 12px;
+  }
+  .carousel__controls .snav__bar {
+    display: none;
   }
   .arrow {
     width: 44px;

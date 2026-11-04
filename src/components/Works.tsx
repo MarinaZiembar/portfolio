@@ -12,11 +12,12 @@ import {
   type TransitionEvent as RTransitionEvent,
 } from "react";
 import ProjectArt from "./ProjectArt";
-import { Reveal } from "./ui";
+import { Reveal, Shape } from "./ui";
 import { projectTypes, projects, tagLabels, type Project, type ProjectType, type Stack } from "@/data/content";
 import { useLang } from "@/i18n/LanguageProvider";
 
 const AUTOPLAY = 3800;
+const DOT_SHAPES = ["circle", "square", "triangle", "plus", "half", "ring"] as const;
 
 // En la frase de filtros mostramos solo los stacks principales.
 const filterStacks: Stack[] = ["react", "next", "reactNative", "typescript", "tailwind"];
@@ -230,6 +231,16 @@ function Carousel({ items }: { items: Project[] }) {
 
   const visible = Math.max(1, Math.floor(per));
   const current = ((index % n) + n) % n;
+
+  // salta a un proyecto por el camino más corto (en el loop infinito)
+  const goTo = (i: number) => {
+    let delta = i - current;
+    if (loop) {
+      if (delta > n / 2) delta -= n;
+      if (delta < -n / 2) delta += n;
+    }
+    if (delta) go(delta);
+  };
   const x = -index * step + drag;
 
   return (
@@ -271,17 +282,27 @@ function Carousel({ items }: { items: Project[] }) {
 
       {(loop || n > visible) && (
         <div className="carousel__controls">
-          <div className="carousel__count">
-            <strong>{String(current + 1).padStart(2, "0")}</strong>
-            <span> / {String(n).padStart(2, "0")}</span>
-          </div>
-
-          <div className="carousel__bar" aria-hidden="true">
-            {items.map((p, i) => (
-              <span key={p.slug} className={i === current ? "is-on" : i < current ? "is-done" : ""}>
-                {i === current && playing && <i key={index} style={{ animationDuration: `${AUTOPLAY}ms` }} />}
-              </span>
-            ))}
+          <div className="snav">
+            <div className="snav__dots" role="group" aria-label={t.works.carousel}>
+              {items.map((p, i) => (
+                <button
+                  key={p.slug}
+                  className={`snav__dot ${i === current ? "is-active" : ""}`}
+                  onClick={() => goTo(i)}
+                  aria-label={p.title}
+                  aria-pressed={i === current}
+                >
+                  <Shape kind={DOT_SHAPES[i % DOT_SHAPES.length]} />
+                </button>
+              ))}
+            </div>
+            <span className="snav__count">
+              <strong>{String(current + 1).padStart(2, "0")}</strong>
+              <span> / {String(n).padStart(2, "0")}</span>
+            </span>
+            <span className="snav__bar" aria-hidden="true">
+              {playing && <i key={index} style={{ animationDuration: `${AUTOPLAY}ms` }} />}
+            </span>
           </div>
 
           <div className="carousel__arrows">

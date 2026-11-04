@@ -1,17 +1,15 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
-import { Shape } from "./ui";
 
 /**
  * Titular de dos líneas que va rotando entre roles.
  * Línea 1 (fina) + "+" rojo, línea 2 (regular).
  * Cada cambio: las letras salen hacia arriba y entran desde abajo, una por una,
- * y el "+" gira. Click en el titular o en los indicadores para cambiar a mano.
+ * y el "+" gira. Cambia solo cada INTERVAL ms.
  */
 
 const INTERVAL = 3200;
-const INDICATORS = ["circle", "square", "triangle", "plus", "half", "ring"] as const;
 
 function Letters({ text, offset = 0 }: { text: string; offset?: number }) {
   return (
@@ -68,18 +66,9 @@ function Slot({
   );
 }
 
-export default function RotatingTitle({
-  lines,
-  ready,
-  labels = { next: "Ver el siguiente rol", roles: "Roles" },
-}: {
-  lines: [string, string][];
-  ready: boolean;
-  labels?: { next: string; roles: string };
-}) {
+export default function RotatingTitle({ lines, ready }: { lines: [string, string][]; ready: boolean }) {
   const [index, setIndex] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
-  const [paused, setPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const go = (next: number) => {
@@ -88,13 +77,13 @@ export default function RotatingTitle({
     setIndex(next);
   };
 
-  // auto-rotación (se pausa con el mouse encima)
+  // auto-rotación
   useEffect(() => {
-    if (!ready || paused) return;
+    if (!ready) return;
     timer.current = setTimeout(() => go((index + 1) % lines.length), INTERVAL);
     return () => clearTimeout(timer.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, ready, paused, lines.length]);
+  }, [index, ready, lines.length]);
 
   // limpia la palabra saliente cuando termina su animación
   useEffect(() => {
@@ -107,18 +96,8 @@ export default function RotatingTitle({
   const old = prev !== null ? lines[prev] : null;
 
   return (
-    <div
-      className={`rt ${ready ? "is-ready" : ""}`}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div className={`rt ${ready ? "is-ready" : ""}`}>
       <h1 className="hero__title rt__title" aria-label={lines.map((l) => l.join(" ")).join(", ")}>
-        <button
-          className="rt__hit"
-          onClick={() => go((index + 1) % lines.length)}
-          aria-label={labels.next}
-          data-cursor="next"
-        />
         <span className="rt__line" aria-hidden="true">
           <Slot word={thin} oldWord={old?.[0] ?? null} wordKey={`a${index}`} oldKey={`ao${prev}`} className="thin" />
           <span className="plus rt__plus" style={{ "--turn": `${index * 180}deg` } as CSSProperties}>
@@ -129,28 +108,6 @@ export default function RotatingTitle({
           <Slot word={bold} oldWord={old?.[1] ?? null} wordKey={`b${index}`} oldKey={`bo${prev}`} className="regular" offset={3} />
         </span>
       </h1>
-
-      <div className="rt__nav">
-        <div className="rt__dots" role="group" aria-label={labels.roles}>
-          {lines.map((l, i) => (
-            <button
-              key={l.join()}
-              className={`rt__dot ${i === index ? "is-active" : ""}`}
-              onClick={() => go(i)}
-              aria-label={l.join(" ")}
-              aria-pressed={i === index}
-            >
-              <Shape kind={INDICATORS[i % INDICATORS.length]} />
-            </button>
-          ))}
-        </div>
-        <span className="rt__count">
-          {String(index + 1).padStart(2, "0")} / {String(lines.length).padStart(2, "0")}
-        </span>
-        <span className="rt__bar" aria-hidden="true">
-          {ready && !paused && <i key={index} style={{ animationDuration: `${INTERVAL}ms` }} />}
-        </span>
-      </div>
     </div>
   );
 }

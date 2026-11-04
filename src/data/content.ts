@@ -43,11 +43,6 @@ export const ui = {
       intro:
         "Desarrolladora frontend con formación en Diseño Gráfico y UX/UI. Transformo ideas en experiencias web pulidas e interactivas, donde el diseño y el código trabajan juntos.",
       cta: "Explorá mi trabajo",
-      badge: "scroll • desplazate • scroll • desplazate • ",
-      badgeAria: "Bajar a trabajos",
-      hint: "Click para reacomodar ↗",
-      nextRole: "Ver el siguiente rol",
-      roles: "Roles",
     },
     marquee2: ["Diseño", "Código", "Tipografía", "Movimiento", "Composición", "Detalle"],
     works: {
@@ -89,11 +84,6 @@ export const ui = {
       intro:
         "Frontend developer with a background in Graphic Design and UX/UI. I turn ideas into polished, interactive web experiences where design and code work together.",
       cta: "Explore my work",
-      badge: "scroll • keep going • scroll • keep going • ",
-      badgeAria: "Scroll to works",
-      hint: "Click to rearrange ↗",
-      nextRole: "Show next role",
-      roles: "Roles",
     },
     marquee2: ["Design", "Code", "Typography", "Motion", "Composition", "Detail"],
     works: {
