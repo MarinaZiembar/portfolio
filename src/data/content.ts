@@ -15,8 +15,6 @@ export const profile = {
   role: ["Sr Frontend Engineer", "& Creative Technologist"],
   location: { es: "Buenos Aires, Argentina", en: "Buenos Aires, Argentina" } as L,
   email: "marinaziembar@gmail.com",
-  phone: "+54 9 11 3199 2611",
-  phoneHref: "tel:+5491131992611",
   linkedin: "https://linkedin.com/in/marina-ziembar",
   // Link a tu CV (ej. Google Drive). Vacío = se oculta el botón.
   // Podés poner uno por idioma: { es: "...", en: "..." }
@@ -70,9 +68,6 @@ export const ui = {
       title: "hablemos",
       write: "Escribime",
       cv: "Descargar CV",
-      copied: "¡Copiado!",
-      copy: "copiar",
-      done: "¡listo!",
     },
     footer: { social: "Redes", top: "Volver arriba ↑", credit: "Diseñado y desarrollado por Marina." },
   },
@@ -111,9 +106,6 @@ export const ui = {
       title: "let's talk",
       write: "Email me",
       cv: "Download CV",
-      copied: "Copied!",
-      copy: "copy",
-      done: "done!",
     },
     footer: { social: "Social", top: "Back to top ↑", credit: "Designed and built by Marina." },
   },

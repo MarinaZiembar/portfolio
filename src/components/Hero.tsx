@@ -34,12 +34,7 @@ export default function Hero() {
             <li>{tr(profile.location)}</li>
             <li>
               <a href={`mailto:${profile.email}`}>
-                <RollText>{profile.email}</RollText>
-              </a>
-            </li>
-            <li>
-              <a href={profile.phoneHref}>
-                <RollText>{profile.phone}</RollText>
+                <RollText>Email ↗</RollText>
               </a>
             </li>
             <li>

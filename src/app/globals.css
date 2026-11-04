@@ -1422,42 +1422,11 @@ main,
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 24px;
   margin-top: clamp(32px, 4vw, 56px);
   padding-top: 28px;
   border-top: 1px solid rgba(255, 255, 255, 0.6);
-}
-.contact__email {
-  position: relative;
-  font-size: clamp(22px, 3.2vw, 44px);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  text-align: left;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s;
-  overflow-wrap: anywhere;
-}
-.contact__email:hover {
-  border-color: var(--paper);
-}
-.contact__copied {
-  position: absolute;
-  left: 0;
-  top: -30px;
-  font-size: 14px;
-  font-weight: 500;
-  background: var(--ink);
-  padding: 3px 10px;
-  opacity: 0;
-  transform: translateY(6px);
-  transition:
-    opacity 0.3s,
-    transform 0.3s var(--ease);
-}
-.contact__copied.is-on {
-  opacity: 1;
-  transform: none;
 }
 .contact__links {
   display: flex;
