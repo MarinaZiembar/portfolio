@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { Reveal, RollText } from "./ui";
 import { profile } from "@/data/content";
+import { useLang } from "@/i18n/LanguageProvider";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const { t, tr } = useLang();
+  const cvUrl = tr(profile.cvUrl);
 
   const copy = async () => {
     try {
@@ -28,35 +31,35 @@ export default function Contact() {
 
       <div className="container contact__inner">
         <Reveal as="p" className="contact__kicker">
-          ¿Tenés un proyecto?
+          {t.contact.kicker}
         </Reveal>
 
         <Reveal as="h2" className="contact__title" variant="mask">
           <span>
-            <span className="thin">hablemos</span>.
+            <span className="thin">{t.contact.title}</span>.
           </span>
         </Reveal>
 
         <Reveal className="contact__actions" delay={120}>
-          <button className="contact__email" onClick={copy} data-cursor={copied ? "¡listo!" : "copiar"}>
+          <button className="contact__email" onClick={copy} data-cursor={copied ? t.contact.done : t.contact.copy}>
             {profile.email}
             <span className={`contact__copied ${copied ? "is-on" : ""}`} role="status">
-              {copied ? "¡Copiado!" : ""}
+              {copied ? t.contact.copied : ""}
             </span>
           </button>
 
           <div className="contact__links">
             <a href={`mailto:${profile.email}`} className="btn btn--white">
-              <RollText>Escribime</RollText>
+              <RollText>{t.contact.write}</RollText>
               <span className="btn__arrow" aria-hidden="true">→</span>
             </a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer" className="btn btn--ghost">
               <RollText>LinkedIn</RollText>
               <span className="btn__arrow" aria-hidden="true">↗</span>
             </a>
-            {profile.cvUrl && (
-              <a href={profile.cvUrl} target="_blank" rel="noreferrer" className="btn btn--ghost">
-                <RollText>Descargar CV</RollText>
+            {cvUrl && (
+              <a href={cvUrl} target="_blank" rel="noreferrer" className="btn btn--ghost">
+                <RollText>{t.contact.cv}</RollText>
                 <span className="btn__arrow" aria-hidden="true">↓</span>
               </a>
             )}
@@ -64,7 +67,7 @@ export default function Contact() {
         </Reveal>
 
         <div className="contact__meta">
-          <span>{profile.location}</span>
+          <span>{tr(profile.location)}</span>
           <a href={profile.phoneHref}>{profile.phone}</a>
         </div>
       </div>

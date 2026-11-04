@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Shape } from "./ui";
+import { useLang } from "@/i18n/LanguageProvider";
 
 const SHAPES = ["circle", "square", "triangle", "plus", "half", "ring"] as const;
 
@@ -72,4 +73,10 @@ export default function Marquee({
       </div>
     </div>
   );
+}
+
+/** Segunda cinta (fondo negro), traducida. */
+export function MarqueeDesign() {
+  const { t } = useLang();
+  return <Marquee words={t.marquee2} tone="ink" baseSpeed={0.45} />;
 }

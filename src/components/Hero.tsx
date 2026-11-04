@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import GeometryCanvas from "./GeometryCanvas";
 import RotatingTitle from "./RotatingTitle";
 import { RollText } from "./ui";
-import { heroLines, intro, profile } from "@/data/content";
+import { heroLines, profile } from "@/data/content";
+import { useLang } from "@/i18n/LanguageProvider";
 
 export default function Hero() {
+  const { t, tr } = useLang();
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const id = requestAnimationFrame(() => setReady(true));
@@ -20,16 +22,16 @@ export default function Hero() {
       <div className="hero__inner container">
         <p className="hero__hello">
           <span className="hero__wave" aria-hidden="true" />
-          Hola, soy {profile.firstName}.
+          {t.hero.hello} {profile.firstName}.
         </p>
 
-        <RotatingTitle lines={heroLines} ready={ready} />
+        <RotatingTitle lines={heroLines} ready={ready} labels={{ next: t.hero.nextRole, roles: t.hero.roles }} />
 
         <div className="hero__bottom">
-          <p className="hero__intro">{intro}</p>
+          <p className="hero__intro">{t.hero.intro}</p>
 
           <ul className="hero__info">
-            <li>{profile.location}</li>
+            <li>{tr(profile.location)}</li>
             <li>
               <a href={`mailto:${profile.email}`}>
                 <RollText>{profile.email}</RollText>
@@ -48,26 +50,28 @@ export default function Hero() {
           </ul>
 
           <a href="#trabajos" className="btn btn--red hero__cta">
-            <RollText>Explorá mi trabajo</RollText>
+            <RollText>{t.hero.cta}</RollText>
             <span className="btn__arrow" aria-hidden="true">↓</span>
           </a>
         </div>
       </div>
 
-      <a href="#trabajos" className="scroll-badge" aria-label="Bajar a trabajos">
+      <a href="#trabajos" className="scroll-badge" aria-label={t.hero.badgeAria}>
         <svg viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <path id="badge-circle" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" />
           </defs>
           <text>
-            <textPath href="#badge-circle" textLength="286" lengthAdjust="spacing">scroll • desplazate • scroll • desplazate • </textPath>
+            <textPath href="#badge-circle" textLength="286" lengthAdjust="spacing">
+              {t.hero.badge}
+            </textPath>
           </text>
         </svg>
         <span className="scroll-badge__core" aria-hidden="true" />
       </a>
 
       <p className="hero__hint" aria-hidden="true">
-        Click para reacomodar ↗
+        {t.hero.hint}
       </p>
     </section>
   );

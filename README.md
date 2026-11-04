@@ -18,12 +18,21 @@ Se puede deployar directo en Vercel (importar el repo, sin configuración extra)
 
 | Qué | Archivo |
 | --- | --- |
-| Textos, proyectos, experiencia, skills, idiomas | `src/data/content.ts` |
+| Textos, proyectos, experiencia, skills, idiomas (ES y EN) | `src/data/content.ts` |
+| Lógica del idioma y el switch ES / EN | `src/i18n/` |
 | Colores, tipografía y todas las animaciones CSS | `src/app/globals.css` (variables en `:root`) |
 | Fuente (Inter Tight) y metadata/SEO | `src/app/layout.tsx` |
 | Botón "Descargar CV" | `cvUrl` en `src/data/content.ts` (vacío = oculto) |
 
 **Proyectos:** los 6 de `content.ts` son de ejemplo, armados a partir de tu experiencia. Cambiá título, descripción, tags y agregá `href` con el link real. El número `seed` genera una ilustración geométrica distinta para cada card; cuando tengas capturas, reemplazá `<ProjectArt />` en `Works.tsx` por un `<Image />` de `next/image`.
+
+## Idiomas
+
+El sitio está en español e inglés, con un switch ES / EN en la barra de navegación.
+
+- La primera visita usa el idioma del navegador (inglés si empieza con `en`, si no español). Después se recuerda la elección.
+- Todo lo traducible está en `src/data/content.ts`: los textos de interfaz en `ui.es` / `ui.en`, y el contenido con la forma `{ es: "...", en: "..." }`.
+- Si agregás una clave en `ui.es` y te olvidás en `ui.en`, TypeScript te avisa al compilar.
 
 ## Animaciones
 
@@ -44,7 +53,8 @@ src/
   app/          layout, page, globals.css
   components/   Hero, GeometryCanvas, Nav, Cursor, Marquee, Works, ProjectArt,
                 Experience, About, Contact, Footer, ui (Reveal, RollText, Shape)
-  data/         content.ts
+  data/         content.ts (contenido en ES y EN)
+  i18n/         LanguageProvider (contexto + useLang), LanguageSwitch
 ```
 
 Los estilos están en CSS plano para no depender de configuración extra; si preferís Tailwind, las clases son BEM y se migran fácil componente por componente.

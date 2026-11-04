@@ -13,11 +13,21 @@ import {
 } from "react";
 import ProjectArt from "./ProjectArt";
 import { Reveal } from "./ui";
-import { disciplines, projectTypes, projects, type Discipline, type Project, type ProjectType } from "@/data/content";
+import {
+  disciplines,
+  projectTypes,
+  projects,
+  tagLabels,
+  type Discipline,
+  type Project,
+  type ProjectType,
+} from "@/data/content";
+import { useLang } from "@/i18n/LanguageProvider";
 
 const AUTOPLAY = 3800;
 
 export default function Works() {
+  const { t, tr } = useLang();
   const [discipline, setDiscipline] = useState<Discipline | null>(null);
   const [type, setType] = useState<ProjectType | null>(null);
 
@@ -30,7 +40,7 @@ export default function Works() {
   );
 
   const countD = (d: Discipline) => projects.filter((p) => p.disciplines.includes(d)).length;
-  const countT = (t: ProjectType) => projects.filter((p) => p.types.includes(t)).length;
+  const countT = (pt: ProjectType) => projects.filter((p) => p.types.includes(pt)).length;
   const reset = () => {
     setDiscipline(null);
     setType(null);
@@ -41,14 +51,14 @@ export default function Works() {
       <div className="container">
         <Reveal as="h2" className="section-title" variant="mask">
           <span>
-            trabajos <span className="thin">seleccionados</span>
+            {t.works.title[0]} <span className="thin">{t.works.title[1]}</span>
             <sup>{filtered.length}</sup>
           </span>
         </Reveal>
 
         <Reveal className="filters" delay={100}>
           <p>
-            Como desarrolladora creativa, hago{" "}
+            {t.works.lead}{" "}
             {disciplines.map((d) => (
               <button
                 key={d}
@@ -56,25 +66,25 @@ export default function Works() {
                 onClick={() => setDiscipline(discipline === d ? null : d)}
                 aria-pressed={discipline === d}
               >
-                {d}
+                {tr(tagLabels[d])}
                 <sup>{countD(d)}</sup>
               </button>
             ))}{" "}
-            para{" "}
-            {projectTypes.map((t) => (
+            {t.works.for}{" "}
+            {projectTypes.map((pt) => (
               <button
-                key={t}
-                className={`chip ${type === t ? "is-active" : ""}`}
-                onClick={() => setType(type === t ? null : t)}
-                aria-pressed={type === t}
+                key={pt}
+                className={`chip ${type === pt ? "is-active" : ""}`}
+                onClick={() => setType(type === pt ? null : pt)}
+                aria-pressed={type === pt}
               >
-                {t}
-                <sup>{countT(t)}</sup>
+                {tr(tagLabels[pt])}
+                <sup>{countT(pt)}</sup>
               </button>
             ))}
             {(discipline || type) && (
               <button className="chip chip--reset" onClick={reset}>
-                ver todo ×
+                {t.works.reset}
               </button>
             )}
           </p>
@@ -82,9 +92,9 @@ export default function Works() {
 
         {filtered.length === 0 ? (
           <p className="works__empty">
-            Nada por acá con esa combinación todavía.{" "}
+            {t.works.empty}{" "}
             <button className="link" onClick={reset}>
-              Ver todo
+              {t.works.showAll}
             </button>
           </p>
         ) : (
@@ -103,6 +113,7 @@ export default function Works() {
 */
 
 function Carousel({ items }: { items: Project[] }) {
+  const { t, lang } = useLang();
   const n = items.length;
   const viewport = useRef<HTMLDivElement>(null);
   const [per, setPer] = useState(3); // cards visibles (según CSS)
@@ -241,8 +252,8 @@ function Carousel({ items }: { items: Project[] }) {
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
         onClickCapture={onClickCapture}
-        aria-roledescription="carrusel"
-        aria-label="Trabajos seleccionados"
+        aria-roledescription={lang === "en" ? "carousel" : "carrusel"}
+        aria-label={t.works.carousel}
       >
         <div
           className={`carousel__track ${animate && measured && !drag ? "" : "no-anim"}`}
@@ -282,7 +293,7 @@ function Carousel({ items }: { items: Project[] }) {
           </div>
 
           <div className="carousel__arrows">
-            <button className="arrow" onClick={() => go(-1)} aria-label="Trabajo anterior" disabled={!loop && index === 0}>
+            <button className="arrow" onClick={() => go(-1)} aria-label={t.works.prev} disabled={!loop && index === 0}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M15 4 7 12l8 8" />
               </svg>
@@ -290,7 +301,7 @@ function Carousel({ items }: { items: Project[] }) {
             <button
               className="arrow arrow--next"
               onClick={() => go(1)}
-              aria-label="Trabajo siguiente"
+              aria-label={t.works.next}
               disabled={!loop && index >= n - visible}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -305,22 +316,23 @@ function Carousel({ items }: { items: Project[] }) {
 }
 
 function ProjectCard({ project: p, number, focusable }: { project: Project; number: number; focusable: boolean }) {
+  const { t, tr } = useLang();
   return (
     <a
       href={p.href ?? "#contacto"}
       className="card"
-      data-cursor="ver"
+      data-cursor={t.works.view}
       draggable={false}
       tabIndex={focusable ? 0 : -1}
       {...(p.href ? { target: "_blank", rel: "noreferrer" } : {})}
     >
       <div className="card__art">
-        <ProjectArt seed={p.seed} title={p.title} />
+        <ProjectArt seed={p.seed} title={tr(p.title)} />
         <span className="card__index">{String(number).padStart(2, "0")}</span>
       </div>
       <div className="card__meta">
         <h3>
-          {p.title}
+          {tr(p.title)}
           <span className="card__arrow" aria-hidden="true">
             ↗
           </span>
@@ -328,10 +340,10 @@ function ProjectCard({ project: p, number, focusable }: { project: Project; numb
         <p className="card__client">
           {p.client} · {p.year}
         </p>
-        <p className="card__desc">{p.description}</p>
+        <p className="card__desc">{tr(p.description)}</p>
         <ul className="card__tags">
-          {[...p.disciplines, ...p.types].map((t) => (
-            <li key={t}>{t}</li>
+          {[...p.disciplines, ...p.types].map((tag) => (
+            <li key={tag}>{tr(tagLabels[tag])}</li>
           ))}
         </ul>
       </div>

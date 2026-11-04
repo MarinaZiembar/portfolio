@@ -279,6 +279,73 @@ button:hover .roll__inner {
   font-weight: 400;
 }
 
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 36px);
+}
+
+/* Switch de idioma ES / EN */
+.lang-switch {
+  position: relative;
+  z-index: 120;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.lang-switch__thumb {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 999px;
+  background: var(--red);
+  transition: transform 0.5s var(--ease);
+}
+.lang-switch button {
+  position: relative;
+  min-width: 34px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  transition: color 0.3s;
+}
+.lang-switch button.is-active {
+  color: var(--paper);
+}
+.lang-switch button:not(.is-active):hover {
+  color: var(--red);
+}
+.nav--menu .lang-switch__thumb {
+  background: var(--paper);
+}
+.nav--menu .lang-switch button.is-active {
+  color: var(--red);
+}
+.nav--menu .lang-switch button:not(.is-active):hover {
+  color: var(--ink);
+}
+
+/* Transición al cambiar de idioma: el texto se desvanece y vuelve */
+main,
+.footer,
+.nav__links,
+.menu nav {
+  transition: opacity 0.22s ease, filter 0.22s ease;
+}
+.is-switching-lang main,
+.is-switching-lang .footer,
+.is-switching-lang .nav__links,
+.is-switching-lang .menu nav {
+  opacity: 0;
+  filter: blur(4px);
+}
+
 .nav__burger {
   display: none;
   position: relative;

@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { RollText } from "./ui";
-
-const links = [
-  { href: "#sobre-mi", label: "Sobre mí." },
-  { href: "#trabajos", label: "Trabajos." },
-  { href: "#experiencia", label: "Experiencia." },
-  { href: "#contacto", label: "Contacto." },
-];
+import LanguageSwitch from "@/i18n/LanguageSwitch";
+import { useLang } from "@/i18n/LanguageProvider";
 
 export default function Nav() {
+  const { t } = useLang();
+  const links = [
+    { href: "#sobre-mi", label: t.nav.about },
+    { href: "#trabajos", label: t.nav.works },
+    { href: "#experiencia", label: t.nav.experience },
+    { href: "#contacto", label: t.nav.contact },
+  ];
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -35,7 +37,7 @@ export default function Nav() {
   return (
     <>
       <header className={`nav ${hidden && !open ? "nav--hidden" : ""} ${scrolled && !open ? "nav--scrolled" : ""} ${open ? "nav--menu" : ""}`}>
-        <a href="#top" className="nav__logo" aria-label="Marina Ziembar — inicio">
+        <a href="#top" className="nav__logo" aria-label={t.navAria.home}>
           <span className="logo-mark" aria-hidden="true">
             <i className="logo-mark__circle" />
             <i className="logo-mark__square" />
@@ -45,24 +47,28 @@ export default function Nav() {
           </span>
         </a>
 
-        <nav className="nav__links" aria-label="Principal">
-          {links.map((l) => (
-            <a key={l.href} href={l.href}>
-              <RollText>{l.label}</RollText>
-            </a>
-          ))}
-        </nav>
+        <div className="nav__right">
+          <nav className="nav__links" aria-label={t.navAria.main}>
+            {links.map((l) => (
+              <a key={l.href} href={l.href}>
+                <RollText>{l.label}</RollText>
+              </a>
+            ))}
+          </nav>
 
-        <button
-          className={`nav__burger ${open ? "is-open" : ""}`}
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-controls="menu-mobile"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
-        >
-          <span />
-          <span />
-        </button>
+          <LanguageSwitch />
+
+          <button
+            className={`nav__burger ${open ? "is-open" : ""}`}
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
+            aria-label={open ? t.navAria.close : t.navAria.open}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
       </header>
 
       <div id="menu-mobile" className={`menu ${open ? "is-open" : ""}`} aria-hidden={!open}>

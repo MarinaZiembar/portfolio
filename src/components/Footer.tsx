@@ -1,7 +1,11 @@
+"use client";
+
 import { RollText } from "./ui";
 import { profile } from "@/data/content";
+import { useLang } from "@/i18n/LanguageProvider";
 
 export default function Footer() {
+  const { t } = useLang();
   return (
     <footer className="footer">
       <div className="container footer__inner">
@@ -13,7 +17,7 @@ export default function Footer() {
           <br />
           {profile.role[1]}
         </p>
-        <nav className="footer__links" aria-label="Redes">
+        <nav className="footer__links" aria-label={t.footer.social}>
           <a href={profile.linkedin} target="_blank" rel="noreferrer">
             <RollText>LinkedIn.</RollText>
           </a>
@@ -21,10 +25,10 @@ export default function Footer() {
             <RollText>Email.</RollText>
           </a>
           <a href="#top">
-            <RollText>Volver arriba ↑</RollText>
+            <RollText>{t.footer.top}</RollText>
           </a>
         </nav>
-        <p className="footer__copy">© {new Date().getFullYear()} — Diseñado y desarrollado por Marina.</p>
+        <p className="footer__copy">© {new Date().getFullYear()} — {t.footer.credit}</p>
       </div>
       <div className="footer__bar" />
     </footer>

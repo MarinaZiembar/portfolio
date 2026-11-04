@@ -68,7 +68,15 @@ function Slot({
   );
 }
 
-export default function RotatingTitle({ lines, ready }: { lines: [string, string][]; ready: boolean }) {
+export default function RotatingTitle({
+  lines,
+  ready,
+  labels = { next: "Ver el siguiente rol", roles: "Roles" },
+}: {
+  lines: [string, string][];
+  ready: boolean;
+  labels?: { next: string; roles: string };
+}) {
   const [index, setIndex] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -108,7 +116,7 @@ export default function RotatingTitle({ lines, ready }: { lines: [string, string
         <button
           className="rt__hit"
           onClick={() => go((index + 1) % lines.length)}
-          aria-label="Ver el siguiente rol"
+          aria-label={labels.next}
           data-cursor="next"
         />
         <span className="rt__line" aria-hidden="true">
@@ -123,7 +131,7 @@ export default function RotatingTitle({ lines, ready }: { lines: [string, string
       </h1>
 
       <div className="rt__nav">
-        <div className="rt__dots" role="group" aria-label="Roles">
+        <div className="rt__dots" role="group" aria-label={labels.roles}>
           {lines.map((l, i) => (
             <button
               key={l.join()}

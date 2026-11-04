@@ -48,7 +48,7 @@ export default function ProjectArt({ seed, title }: { seed: number; title: strin
   }
 
   return (
-    <svg className="art" viewBox={`0 0 ${cols * cell} ${rows * cell}`} role="img" aria-label={`Ilustración de ${title}`}>
+    <svg className="art" viewBox={`0 0 ${cols * cell} ${rows * cell}`} aria-hidden="true" data-title={title}>
       <rect width="100%" height="100%" fill={bg} />
       {pieces.map((p, i) => {
         const cx = p.x + p.s / 2;
