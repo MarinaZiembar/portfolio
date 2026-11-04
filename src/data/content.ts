@@ -51,7 +51,7 @@ export const ui = {
     },
     marquee2: ["Diseño", "Código", "Tipografía", "Movimiento", "Composición", "Detalle"],
     works: {
-      title: ["trabajos", "seleccionados"],
+      title: ["Trabajos", "seleccionados"],
       lead: "Como desarrolladora creativa, hago",
       for: "para",
       reset: "ver todo ×",
@@ -62,9 +62,9 @@ export const ui = {
       next: "Trabajo siguiente",
       view: "ver",
     },
-    experience: { title: ["experiencia", "& recorrido"] },
+    experience: { title: ["Experiencia", "& Recorrido"] },
     about: {
-      title: ["pocas palabras", "sobre mí"],
+      title: ["Pocas palabras", "sobre mí"],
       reel: ["Frontend", "UI/UX", "Diseño gráfico", "Design systems", "Motion", "Accesibilidad", "Mentoría", "& más"],
       education: "Educación",
       certifications: "Certificaciones",
