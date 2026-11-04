@@ -144,17 +144,18 @@ export const skillGroups: { title: L; items: string[] }[] = [
   {
     title: { es: "Herramientas & Metodologías", en: "Tools & Methodologies" },
     items: [
-      "Git",
-      "Git Flow",
-      "Vercel",
-      "Google Play Console",
-      "Apple Developer Program",
       "Claude",
       "Cursor",
       "SDD",
+      "Gemini",
+      "Git",
+      "Git Flow",
+      "Vercel",
       "Agile",
       "Scrum",
       "Jira",
+      "Google Play Console",
+      "Apple Developer Program",
     ],
   },
 ];
