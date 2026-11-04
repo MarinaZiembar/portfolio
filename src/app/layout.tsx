@@ -10,6 +10,12 @@ const sans = Inter_Tight({
 });
 
 export const metadata: Metadata = {
+  // No indexar en buscadores (Google, etc.)
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
+  },
   title: "Marina Ziembar — Sr Frontend Engineer & Creative Technologist",
   description:
     "Desarrolladora frontend con formación en Diseño Gráfico y UX/UI, en Buenos Aires. React, Next.js, TypeScript y Tailwind.",

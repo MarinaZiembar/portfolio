@@ -53,7 +53,6 @@ export const ui = {
       carousel: "Trabajos seleccionados",
       prev: "Trabajo anterior",
       next: "Trabajo siguiente",
-      view: "ver",
     },
     experience: { title: ["Experiencia", "& Recorrido"] },
     about: {
@@ -91,7 +90,6 @@ export const ui = {
       carousel: "Selected works",
       prev: "Previous project",
       next: "Next project",
-      view: "view",
     },
     experience: { title: ["experience", "& journey"] },
     about: {
@@ -141,11 +139,23 @@ export const skillGroups: { title: L; items: string[] }[] = [
   },
   {
     title: { es: "Backend & CMS", en: "Backend & CMS" },
-    items: ["PHP", "Laravel", "MySQL", "WordPress", "Firebase", "Strapi"],
+    items: ["PHP", "Laravel", "MySQL", "WordPress", "Elementor", "WP Bakery", "Firebase", "Strapi"],
   },
   {
     title: { es: "Herramientas & Metodologías", en: "Tools & Methodologies" },
-    items: ["Git", "Git Flow", "Agile", "Scrum", "Jira"],
+    items: [
+      "Git",
+      "Git Flow",
+      "Vercel",
+      "Google Play Console",
+      "Apple Developer Program",
+      "Claude",
+      "Cursor",
+      "SDD",
+      "Agile",
+      "Scrum",
+      "Jira",
+    ],
   },
 ];
 

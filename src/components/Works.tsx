@@ -329,12 +329,11 @@ function Carousel({ items }: { items: Project[] }) {
 }
 
 function ProjectCard({ project: p, number, focusable }: { project: Project; number: number; focusable: boolean }) {
-  const { t, tr } = useLang();
+  const { tr } = useLang();
   return (
     <a
       href={p.href}
       className="card"
-      data-cursor={t.works.view}
       draggable={false}
       tabIndex={focusable ? 0 : -1}
       target="_blank"
