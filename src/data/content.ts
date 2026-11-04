@@ -10,6 +10,7 @@ export type L = Record<Locale, string>;
 
 export const profile = {
   firstName: "Marina",
+  nickName: "Maru",
   lastName: "Ziembar",
   role: ["Sr Frontend Engineer", "& Creative Technologist"],
   location: { es: "Buenos Aires, Argentina", en: "Buenos Aires, Argentina" } as L,
@@ -38,7 +39,7 @@ export const ui = {
     nav: { about: "Sobre mí.", works: "Trabajos.", experience: "Experiencia.", contact: "Contacto." },
     navAria: { main: "Principal", home: "Marina Ziembar — inicio", open: "Abrir menú", close: "Cerrar menú", lang: "Idioma" },
     hero: {
-      hello: "Hola, soy",
+      hello: "Hola! Soy",
       intro:
         "Desarrolladora frontend con formación en Diseño Gráfico y UX/UI. Transformo ideas en experiencias web pulidas e interactivas, donde el diseño y el código trabajan juntos.",
       cta: "Explorá mi trabajo",
