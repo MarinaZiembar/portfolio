@@ -424,6 +424,7 @@ export const education: { title: L; place: L; period: string }[] = [
 ];
 
 export const certifications: { title: L; place: string; year: string }[] = [
+  { title: { es: "Diseño de Experiencias Didácticas Gamificadas", en: "Gamified Experience Design" }, place: "Universidad Siglo XXI", year: "2026" },
   { title: { es: "Software Quality Testing", en: "Software Quality Testing" }, place: "Digital House", year: "2025" },
   { title: { es: "Digital Product Management", en: "Digital Product Management" }, place: "Digital House", year: "2024" },
   { title: { es: "Liderazgo Estratégico", en: "Strategic Leadership" }, place: "UTN", year: "2023" },
