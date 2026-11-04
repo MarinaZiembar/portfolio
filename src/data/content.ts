@@ -64,7 +64,7 @@ export const ui = {
     },
     experience: { title: ["Experiencia", "& Recorrido"] },
     about: {
-      title: ["Pocas palabras", "sobre mí"],
+      title: ["Un poco", "sobre mí"],
       reel: ["Frontend", "UI/UX", "Diseño gráfico", "Design systems", "Motion", "Accesibilidad", "Mentoría", "& más"],
       education: "Educación",
       certifications: "Certificaciones",
@@ -110,7 +110,7 @@ export const ui = {
     },
     experience: { title: ["experience", "& journey"] },
     about: {
-      title: ["a few words", "about me"],
+      title: ["a bit", "about me"],
       reel: ["Frontend", "UI/UX", "Graphic design", "Design systems", "Motion", "Accessibility", "Mentoring", "& more"],
       education: "Education",
       certifications: "Certifications",
@@ -215,8 +215,20 @@ export type Project = {
   seed: number; // define la composición geométrica de fondo
 };
 
-// Proyectos tomados del PDF "Proyectos" (más nuevo primero).
+// Proyectos tomados del PDF "Proyectos". El orden de este array es el orden del carrusel.
 export const projects: Project[] = [
+  {
+    slug: "umarket",
+    title: "Umarket",
+    client: "Itti Digital",
+    period: { es: "2025 — 2026", en: "2025 — 2026" },
+    types: ["ecommerce"],
+    stack: ["react", "next", "typescript", "tailwind"],
+    href: "https://umarket.com.py/es",
+    linkLabel: { es: "umarket.com.py", en: "umarket.com.py" },
+    logo: "/projects/umarket.png",
+    seed: 7,
+  },
   {
     slug: "ame-pilates",
     title: "Âme Pilates Body Ballet",
@@ -238,18 +250,6 @@ export const projects: Project[] = [
     linkLabel: { es: "relocationbylambo.com.ar", en: "relocationbylambo.com.ar" },
     logo: "/projects/relocation.png",
     seed: 11,
-  },
-  {
-    slug: "umarket",
-    title: "Umarket",
-    client: "Itti Digital",
-    period: { es: "2025 — 2026", en: "2025 — 2026" },
-    types: ["ecommerce"],
-    stack: ["react", "next", "typescript", "tailwind"],
-    href: "https://umarket.com.py/es",
-    linkLabel: { es: "umarket.com.py", en: "umarket.com.py" },
-    logo: "/projects/umarket.png",
-    seed: 7,
   },
   {
     slug: "precompra",

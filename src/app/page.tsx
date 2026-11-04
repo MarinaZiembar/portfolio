@@ -4,7 +4,7 @@ import Hero from "@/components/Hero";
 import Marquee, { MarqueeDesign } from "@/components/Marquee";
 import Works from "@/components/Works";
 import Experience from "@/components/Experience";
-import About from "@/components/About";
+import About, { Background } from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { marqueeWords } from "@/data/content";
@@ -18,10 +18,11 @@ export default function Home() {
       <main>
         <Hero />
         <Marquee words={marqueeWords} />
+        <About />
         <Works />
         <Experience />
         <MarqueeDesign />
-        <About />
+        <Background />
         <Contact />
       </main>
       <Footer />

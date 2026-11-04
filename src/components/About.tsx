@@ -50,7 +50,18 @@ export default function About() {
           ))}
         </div>
 
-        <div className="facts">
+      </div>
+    </section>
+  );
+}
+
+/** Educación, certificaciones e idiomas (separado de "Sobre mí"). */
+export function Background() {
+  const { t, tr } = useLang();
+  return (
+    <section id="formacion" className="section background">
+      <div className="container">
+        <div className="facts facts--standalone">
           <Reveal className="facts__col">
             <h3 className="facts__title">{t.about.education}</h3>
             {education.map((e) => (
