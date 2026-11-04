@@ -53,7 +53,7 @@ export const ui = {
     works: {
       title: ["Trabajos", "seleccionados"],
       lead: "Como desarrolladora creativa, hago",
-      for: "para",
+      for: "con",
       reset: "ver todo ×",
       empty: "Nada por acá con esa combinación todavía.",
       showAll: "Ver todo",
@@ -98,8 +98,8 @@ export const ui = {
     marquee2: ["Design", "Code", "Typography", "Motion", "Composition", "Detail"],
     works: {
       title: ["selected", "works"],
-      lead: "As a creative developer, I do",
-      for: "for",
+      lead: "As a creative developer, I build",
+      for: "with",
       reset: "see all ×",
       empty: "Nothing here with that combination yet.",
       showAll: "See all",
@@ -182,114 +182,109 @@ export const marqueeWords = [
 
 // ── Trabajos ──────────────────────────────────────────────────
 
-export const disciplines = ["frontend", "uiux", "interaction", "leadership"] as const;
-export const projectTypes = ["ecommerce", "dashboards", "apps", "websites"] as const;
+// Filtros de la frase "hago [tipo] con [stack]".
+export const projectTypes = ["websites", "ecommerce", "apps"] as const;
+export const stacks = ["react", "next", "reactNative", "typescript", "tailwind", "v0"] as const;
 
-export type Discipline = (typeof disciplines)[number];
 export type ProjectType = (typeof projectTypes)[number];
+export type Stack = (typeof stacks)[number];
 
-export const tagLabels: Record<Discipline | ProjectType, L> = {
-  frontend: { es: "Frontend", en: "Frontend" },
-  uiux: { es: "UI/UX", en: "UI/UX" },
-  interaction: { es: "Interacción", en: "Interaction" },
-  leadership: { es: "Liderazgo", en: "Leadership" },
-  ecommerce: { es: "E-commerce", en: "E-commerce" },
-  dashboards: { es: "Dashboards", en: "Dashboards" },
-  apps: { es: "Apps", en: "Apps" },
+export const tagLabels: Record<ProjectType | Stack, L> = {
   websites: { es: "Sitios web", en: "Websites" },
+  ecommerce: { es: "E-commerce", en: "E-commerce" },
+  apps: { es: "Apps móviles", en: "Mobile apps" },
+  react: { es: "React", en: "React" },
+  next: { es: "Next.js", en: "Next.js" },
+  reactNative: { es: "React Native", en: "React Native" },
+  typescript: { es: "TypeScript", en: "TypeScript" },
+  tailwind: { es: "Tailwind", en: "Tailwind" },
+  v0: { es: "v0", en: "v0" },
 };
 
 export type Project = {
   slug: string;
-  title: L;
-  client: string;
-  year: string;
-  description: L;
-  disciplines: Discipline[];
+  title: string;
+  client?: string; // empresa dueña del proyecto (si no hay, se muestra solo la fecha)
+  period: L;
+  description?: L; // opcional: una línea sobre el proyecto
   types: ProjectType[];
-  href?: string;
-  seed: number; // define la composición geométrica de la miniatura
+  stack: Stack[];
+  href: string;
+  linkLabel: L; // texto del link (dominio o tienda)
+  logo: string; // imagen en /public/projects
+  seed: number; // define la composición geométrica de fondo
 };
 
-// ⚠️ Proyectos de ejemplo basados en tu experiencia: reemplazalos por los reales
-// (título, descripción, link). `seed` cambia la ilustración generativa.
+// Proyectos tomados del PDF "Proyectos" (más nuevo primero).
 export const projects: Project[] = [
   {
-    slug: "ecommerce-white-label",
-    title: { es: "E-commerce white-label", en: "White-label e-commerce" },
-    client: "itti",
-    year: "2025",
-    description: {
-      es: "Componentes reutilizables y escalables para una plataforma multimarca.",
-      en: "Reusable, scalable components for a multi-brand platform.",
-    },
-    disciplines: ["frontend", "uiux"],
-    types: ["ecommerce"],
+    slug: "ame-pilates",
+    title: "Âme Pilates Body Ballet",
+    period: { es: "Jun 2026", en: "Jun 2026" },
+    types: ["websites"],
+    stack: ["react", "next", "typescript", "tailwind"],
+    href: "https://www.amepilates.com.ar",
+    linkLabel: { es: "amepilates.com.ar", en: "amepilates.com.ar" },
+    logo: "/projects/ame.png",
     seed: 3,
   },
   {
-    slug: "dashboard-ia",
-    title: { es: "Dashboard conversacional con IA", en: "AI conversation dashboard" },
-    client: "Cliengo",
-    year: "2024",
-    description: {
-      es: "Conversaciones de múltiples redes sociales unificadas en una sola interfaz.",
-      en: "Conversations from multiple social channels unified in a single interface.",
-    },
-    disciplines: ["frontend", "interaction"],
-    types: ["dashboards"],
+    slug: "relocation-by-lambo",
+    title: "Relocation by Lambo",
+    period: { es: "May 2026", en: "May 2026" },
+    types: ["websites"],
+    stack: ["react", "next", "typescript", "tailwind", "v0"],
+    href: "https://www.relocationbylambo.com.ar",
+    linkLabel: { es: "relocationbylambo.com.ar", en: "relocationbylambo.com.ar" },
+    logo: "/projects/relocation.png",
     seed: 11,
   },
   {
-    slug: "apps-mobile",
-    title: { es: "Apps móviles", en: "Mobile apps" },
-    client: "Creativedog",
-    year: "2023",
-    description: {
-      es: "Liderazgo de un equipo de 5 personas desarrollando apps con React Native.",
-      en: "Led a team of 5 building apps with React Native.",
-    },
-    disciplines: ["frontend", "leadership"],
-    types: ["apps"],
+    slug: "umarket",
+    title: "Umarket",
+    client: "Itti Digital",
+    period: { es: "2025 — 2026", en: "2025 — 2026" },
+    types: ["ecommerce"],
+    stack: ["react", "next", "typescript", "tailwind"],
+    href: "https://umarket.com.py/es",
+    linkLabel: { es: "umarket.com.py", en: "umarket.com.py" },
+    logo: "/projects/umarket.png",
     seed: 7,
   },
   {
-    slug: "sitios-institucionales",
-    title: { es: "Sitios institucionales", en: "Corporate websites" },
+    slug: "precompra",
+    title: "Precompra",
     client: "Creativedog",
-    year: "2022",
-    description: {
-      es: "Sitios a medida con Next.js y WordPress, con foco en detalle visual.",
-      en: "Custom sites built with Next.js and WordPress, with a focus on visual detail.",
-    },
-    disciplines: ["frontend", "uiux"],
-    types: ["websites"],
+    period: { es: "2024", en: "2024" },
+    types: ["apps"],
+    stack: ["reactNative"],
+    href: "https://play.google.com/store/apps/details?id=com.precompra&hl=es_AR",
+    linkLabel: { es: "Google Play", en: "Google Play" },
+    logo: "/projects/precompra.png",
     seed: 21,
   },
   {
-    slug: "design-system",
-    title: { es: "Librería de componentes", en: "Component library" },
+    slug: "separados-con-wilas",
+    title: "Separados con Wilas",
     client: "Creativedog",
-    year: "2021",
-    description: {
-      es: "Lineamientos de frontend y estructura de componentes con Atomic Design.",
-      en: "Frontend guidelines and component structure based on Atomic Design.",
-    },
-    disciplines: ["uiux", "leadership"],
-    types: ["websites", "apps"],
+    period: { es: "2023", en: "2023" },
+    types: ["websites"],
+    stack: ["react", "next"],
+    href: "https://separadosconwilas.com",
+    linkLabel: { es: "separadosconwilas.com", en: "separadosconwilas.com" },
+    logo: "/projects/separados.png",
     seed: 5,
   },
   {
-    slug: "portfolio",
-    title: { es: "Este portfolio", en: "This portfolio" },
-    client: "Personal",
-    year: "2026",
-    description: {
-      es: "Next.js, canvas y geometría en movimiento.",
-      en: "Next.js, canvas and geometry in motion.",
-    },
-    disciplines: ["frontend", "interaction", "uiux"],
-    types: ["websites"],
+    slug: "findpet",
+    title: "FindPet",
+    client: "Creativedog",
+    period: { es: "2021 — 2022", en: "2021 — 2022" },
+    types: ["apps"],
+    stack: ["reactNative"],
+    href: "https://play.google.com/store/apps/details?id=com.findpetapp.app&hl=es_AR",
+    linkLabel: { es: "Google Play", en: "Google Play" },
+    logo: "/projects/findpet.png",
     seed: 17,
   },
 ];

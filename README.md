@@ -24,7 +24,7 @@ Se puede deployar directo en Vercel (importar el repo, sin configuración extra)
 | Fuente (Inter Tight) y metadata/SEO | `src/app/layout.tsx` |
 | Botón "Descargar CV" | `cvUrl` en `src/data/content.ts` (vacío = oculto) |
 
-**Proyectos:** los 6 de `content.ts` son de ejemplo, armados a partir de tu experiencia. Cambiá título, descripción, tags y agregá `href` con el link real. El número `seed` genera una ilustración geométrica distinta para cada card; cuando tengas capturas, reemplazá `<ProjectArt />` en `Works.tsx` por un `<Image />` de `next/image`.
+**Proyectos:** están en `projects` dentro de `content.ts`, tomados de tu PDF de proyectos (nombre, stack, fecha, empresa y link). Los logos están en `public/projects/`. Cada proyecto acepta una `description` opcional en ES/EN si querés sumar una línea. El número `seed` cambia la composición geométrica de fondo de cada card.
 
 ## Idiomas
 
@@ -54,6 +54,8 @@ src/
   components/   Hero, GeometryCanvas, Nav, Cursor, Marquee, Works, ProjectArt,
                 Experience, About, Contact, Footer, ui (Reveal, RollText, Shape)
   data/         content.ts (contenido en ES y EN)
+public/
+  projects/     logos de los proyectos
   i18n/         LanguageProvider (contexto + useLang), LanguageSwitch
 ```
 

@@ -13,37 +13,29 @@ import {
 } from "react";
 import ProjectArt from "./ProjectArt";
 import { Reveal } from "./ui";
-import {
-  disciplines,
-  projectTypes,
-  projects,
-  tagLabels,
-  type Discipline,
-  type Project,
-  type ProjectType,
-} from "@/data/content";
+import { projectTypes, projects, tagLabels, type Project, type ProjectType, type Stack } from "@/data/content";
 import { useLang } from "@/i18n/LanguageProvider";
 
 const AUTOPLAY = 3800;
 
+// En la frase de filtros mostramos solo los stacks principales.
+const filterStacks: Stack[] = ["react", "next", "reactNative", "typescript", "tailwind"];
+
 export default function Works() {
   const { t, tr } = useLang();
-  const [discipline, setDiscipline] = useState<Discipline | null>(null);
   const [type, setType] = useState<ProjectType | null>(null);
+  const [stack, setStack] = useState<Stack | null>(null);
 
   const filtered = useMemo(
-    () =>
-      projects.filter(
-        (p) => (!discipline || p.disciplines.includes(discipline)) && (!type || p.types.includes(type)),
-      ),
-    [discipline, type],
+    () => projects.filter((p) => (!type || p.types.includes(type)) && (!stack || p.stack.includes(stack))),
+    [type, stack],
   );
 
-  const countD = (d: Discipline) => projects.filter((p) => p.disciplines.includes(d)).length;
   const countT = (pt: ProjectType) => projects.filter((p) => p.types.includes(pt)).length;
+  const countS = (st: Stack) => projects.filter((p) => p.stack.includes(st)).length;
   const reset = () => {
-    setDiscipline(null);
     setType(null);
+    setStack(null);
   };
 
   return (
@@ -59,18 +51,6 @@ export default function Works() {
         <Reveal className="filters" delay={100}>
           <p>
             {t.works.lead}{" "}
-            {disciplines.map((d) => (
-              <button
-                key={d}
-                className={`chip ${discipline === d ? "is-active" : ""}`}
-                onClick={() => setDiscipline(discipline === d ? null : d)}
-                aria-pressed={discipline === d}
-              >
-                {tr(tagLabels[d])}
-                <sup>{countD(d)}</sup>
-              </button>
-            ))}{" "}
-            {t.works.for}{" "}
             {projectTypes.map((pt) => (
               <button
                 key={pt}
@@ -81,8 +61,20 @@ export default function Works() {
                 {tr(tagLabels[pt])}
                 <sup>{countT(pt)}</sup>
               </button>
+            ))}{" "}
+            {t.works.for}{" "}
+            {filterStacks.map((st) => (
+              <button
+                key={st}
+                className={`chip ${stack === st ? "is-active" : ""}`}
+                onClick={() => setStack(stack === st ? null : st)}
+                aria-pressed={stack === st}
+              >
+                {tr(tagLabels[st])}
+                <sup>{countS(st)}</sup>
+              </button>
             ))}
-            {(discipline || type) && (
+            {(type || stack) && (
               <button className="chip chip--reset" onClick={reset}>
                 {t.works.reset}
               </button>
@@ -98,7 +90,7 @@ export default function Works() {
             </button>
           </p>
         ) : (
-          <Carousel items={filtered} key={`${discipline ?? "all"}-${type ?? "all"}`} />
+          <Carousel items={filtered} key={`${type ?? "all"}-${stack ?? "all"}`} />
         )}
       </div>
     </section>
@@ -319,30 +311,32 @@ function ProjectCard({ project: p, number, focusable }: { project: Project; numb
   const { t, tr } = useLang();
   return (
     <a
-      href={p.href ?? "#contacto"}
+      href={p.href}
       className="card"
       data-cursor={t.works.view}
       draggable={false}
       tabIndex={focusable ? 0 : -1}
-      {...(p.href ? { target: "_blank", rel: "noreferrer" } : {})}
+      target="_blank"
+      rel="noreferrer"
     >
       <div className="card__art">
-        <ProjectArt seed={p.seed} title={tr(p.title)} />
+        <ProjectArt seed={p.seed} title={p.title} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="card__logo" src={p.logo} alt="" draggable={false} loading="lazy" />
         <span className="card__index">{String(number).padStart(2, "0")}</span>
       </div>
       <div className="card__meta">
         <h3>
-          {tr(p.title)}
+          {p.title}
           <span className="card__arrow" aria-hidden="true">
             ↗
           </span>
         </h3>
-        <p className="card__client">
-          {p.client} · {p.year}
-        </p>
-        <p className="card__desc">{tr(p.description)}</p>
+        <p className="card__client">{p.client ? `${p.client} · ${tr(p.period)}` : tr(p.period)}</p>
+        {p.description && <p className="card__desc">{tr(p.description)}</p>}
+        <p className="card__link">{tr(p.linkLabel)}</p>
         <ul className="card__tags">
-          {[...p.disciplines, ...p.types].map((tag) => (
+          {[...p.types, ...p.stack].map((tag) => (
             <li key={tag}>{tr(tagLabels[tag])}</li>
           ))}
         </ul>
