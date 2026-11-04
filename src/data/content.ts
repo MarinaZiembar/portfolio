@@ -64,7 +64,7 @@ export const ui = {
     },
     contact: {
       kicker: "¿Tenés un proyecto?",
-      title: "hablemos",
+      title: "charlemos",
       write: "Escribime",
       cv: "Descargar CV",
     },
