@@ -1413,7 +1413,7 @@ main,
 }
 .contact__title {
   margin: 0;
-  font-size: clamp(76px, 19vw, 300px);
+  font-size: clamp(56px, 19vw, 300px);
   letter-spacing: -0.07em;
   line-height: 0.85;
   font-weight: 400;
