@@ -128,7 +128,7 @@ export const about: Record<Locale, string[]> = {
   ],
 };
 
-export const skillGroups: { title: L; items: string[] }[] = [
+export const skillGroups: { title: L; items: (string | L)[] }[] = [
   {
     title: { es: "Frontend", en: "Frontend" },
     items: ["React", "Next.js", "React Native", "JavaScript (ES6+)", "TypeScript", "TanStack Query", "Redux", "TailwindCSS", "HTML5", "CSS3", "SASS", "jQuery"],
@@ -140,6 +140,15 @@ export const skillGroups: { title: L; items: string[] }[] = [
   {
     title: { es: "Backend & CMS", en: "Backend & CMS" },
     items: ["PHP", "Laravel", "MySQL", "WordPress", "Elementor", "WP Bakery", "Firebase", "Strapi"],
+  },
+  {
+    title: { es: "Performance & Métricas", en: "Performance & Metrics" },
+    items: [
+      "PageSpeed Insights",
+      "Core Web Vitals",
+      "Google Tag Manager",
+      { es: "SEO técnico", en: "Technical SEO" },
+    ],
   },
   {
     title: { es: "Herramientas & Metodologías", en: "Tools & Methodologies" },

@@ -38,13 +38,14 @@ export default function About() {
           {skillGroups.map((g, i) => (
             <Reveal key={g.title.es} className="skills__group" delay={i * 80}>
               <h3>
-                <Shape kind={(["circle", "square", "triangle", "plus"] as const)[i % 4]} className="skills__shape" />
+                <Shape kind={(["circle", "square", "triangle", "ring", "plus"] as const)[i % 5]} className="skills__shape" />
                 {tr(g.title)}
               </h3>
               <ul>
-                {g.items.map((s) => (
-                  <li key={s}>{s}</li>
-                ))}
+                {g.items.map((s) => {
+                  const label = typeof s === "string" ? s : tr(s);
+                  return <li key={label}>{label}</li>;
+                })}
               </ul>
             </Reveal>
           ))}
