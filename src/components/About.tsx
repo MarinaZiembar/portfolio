@@ -1,7 +1,7 @@
 "use client";
 
 import { Reveal, Shape } from "./ui";
-import { about, certifications, education, languages, skillGroups } from "@/data/content";
+import { about, certifications, education, languages, skillColumns } from "@/data/content";
 import { useLang } from "@/i18n/LanguageProvider";
 
 export default function About() {
@@ -35,19 +35,26 @@ export default function About() {
         </div>
 
         <div className="skills">
-          {skillGroups.map((g, i) => (
-            <Reveal key={g.title.es} className="skills__group" delay={i * 80}>
-              <h3>
-                <Shape kind={(["circle", "square", "triangle", "ring", "plus"] as const)[i % 5]} className="skills__shape" />
-                {tr(g.title)}
-              </h3>
-              <ul>
-                {g.items.map((s) => {
-                  const label = typeof s === "string" ? s : tr(s);
-                  return <li key={label}>{label}</li>;
-                })}
-              </ul>
-            </Reveal>
+          {skillColumns.map((col, c) => (
+            <div key={c} className="skills__col">
+              {col.map((g) => {
+                const i = skillColumns.flat().indexOf(g);
+                return (
+                  <Reveal key={g.title.es} className="skills__group" delay={i * 80}>
+                    <h3>
+                      <Shape kind={(["circle", "ring", "square", "triangle", "plus"] as const)[i % 5]} className="skills__shape" />
+                      {tr(g.title)}
+                    </h3>
+                    <ul>
+                      {g.items.map((s) => {
+                        const label = typeof s === "string" ? s : tr(s);
+                        return <li key={label}>{label}</li>;
+                      })}
+                    </ul>
+                  </Reveal>
+                );
+              })}
+            </div>
           ))}
         </div>
 

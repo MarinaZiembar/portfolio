@@ -128,45 +128,51 @@ export const about: Record<Locale, string[]> = {
   ],
 };
 
-export const skillGroups: { title: L; items: (string | L)[] }[] = [
-  {
-    title: { es: "Frontend", en: "Frontend" },
-    items: ["React", "Next.js", "React Native", "JavaScript (ES6+)", "TypeScript", "TanStack Query", "Redux", "TailwindCSS", "HTML5", "CSS3", "SASS", "jQuery"],
-  },
-  {
-    title: { es: "Diseño", en: "Design" },
-    items: ["UI/UX Design", "Responsive Web Design", "Atomic Design", "Graphic Design", "Figma", "Photoshop", "Illustrator", "Adobe XD"],
-  },
-  {
-    title: { es: "Backend & CMS", en: "Backend & CMS" },
-    items: ["PHP", "Laravel", "MySQL", "WordPress", "Elementor", "WP Bakery", "Firebase", "Strapi"],
-  },
-  {
-    title: { es: "Performance & Métricas", en: "Performance & Metrics" },
-    items: [
-      "PageSpeed Insights",
-      "Core Web Vitals",
-      "Google Tag Manager",
-      { es: "SEO técnico", en: "Technical SEO" },
-    ],
-  },
-  {
-    title: { es: "Herramientas & Metodologías", en: "Tools & Methodologies" },
-    items: [
-      "Claude",
-      "Cursor",
-      "SDD",
-      "Gemini",
-      "Git",
-      "Git Flow",
-      "Vercel",
-      "Agile",
-      "Scrum",
-      "Jira",
-      "Google Play Console",
-      "Apple Developer Program",
-    ],
-  },
+export type SkillGroup = { title: L; items: (string | L)[] };
+
+// Cada elemento es una columna de la grilla: uno o más grupos apilados.
+export const skillColumns: SkillGroup[][] = [
+  [
+    {
+      title: { es: "Frontend", en: "Frontend" },
+      items: ["React", "Next.js", "React Native", "JavaScript (ES6+)", "TypeScript", "TanStack Query", "Redux", "TailwindCSS", "HTML5", "CSS3", "SASS", "jQuery"],
+    },
+    {
+      title: { es: "Performance & Métricas", en: "Performance & Metrics" },
+      items: ["PageSpeed Insights", "Core Web Vitals", "Google Tag Manager", { es: "SEO técnico", en: "Technical SEO" }],
+    },
+  ],
+  [
+    {
+      title: { es: "Diseño", en: "Design" },
+      items: ["UI/UX Design", "Responsive Web Design", "Atomic Design", "Graphic Design", "Figma", "Photoshop", "Illustrator", "Adobe XD"],
+    },
+  ],
+  [
+    {
+      title: { es: "Backend & CMS", en: "Backend & CMS" },
+      items: ["PHP", "Laravel", "MySQL", "WordPress", "Elementor", "WP Bakery", "Firebase", "Strapi"],
+    },
+  ],
+  [
+    {
+      title: { es: "Herramientas & Metodologías", en: "Tools & Methodologies" },
+      items: [
+        "Claude",
+        "Cursor",
+        "SDD",
+        "Gemini",
+        "Git",
+        "Git Flow",
+        "Vercel",
+        "Agile",
+        "Scrum",
+        "Jira",
+        "Google Play Console",
+        "Apple Developer Program",
+      ],
+    },
+  ],
 ];
 
 export const marqueeWords = [
