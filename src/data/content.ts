@@ -223,6 +223,17 @@ export const projects: Project[] = [
     seed: 7,
   },
   {
+    slug: "expediente-ueno",
+    title: "El caso ueno",
+    period: { es: "Nov 2026", en: "Nov 2026" },
+    types: ["websites"],
+    stack: ["react", "next", "typescript"],
+    href: "https://expediente-ueno.vercel.app",
+    linkLabel: { es: "expediente-ueno.vercel.app", en: "expediente-ueno.vercel.app" },
+    logo: "/projects/ueno.png",
+    seed: 13,
+  },
+  {
     slug: "ame-pilates",
     title: "Âme Pilates Body Ballet",
     period: { es: "Jun 2026", en: "Jun 2026" },
