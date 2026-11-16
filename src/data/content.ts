@@ -238,6 +238,17 @@ export const projects: Project[] = [
     seed: 7,
   },
   {
+    slug: "hola-soy-maru",
+    title: "Hola soy Maru",
+    period: { es: "Nov 2026", en: "Nov 2026" },
+    types: ["websites"],
+    stack: ["react", "next", "typescript"],
+    href: "https://holaasoymaru.com.ar",
+    linkLabel: { es: "holaasoymaru.com.ar", en: "holaasoymaru.com.ar" },
+    logo: "/projects/holaasoymaru.png",
+    seed: 17,
+  },
+  {
     slug: "expediente-ueno",
     title: "El caso ueno",
     period: { es: "Nov 2026", en: "Nov 2026" },
