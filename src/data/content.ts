@@ -26,7 +26,6 @@ export const profile = {
 export const heroLines: [string, string][] = [
   ["frontend", "engineer"],
   ["creative", "technologist"],
-  ["ui/ux", "designer"],
   ["team", "lead"],
 ];
 
