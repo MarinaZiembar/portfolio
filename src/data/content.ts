@@ -416,6 +416,23 @@ export const experience: Job[] = [
     },
   },
   {
+    company: "Holaa! Soy Maru",
+    role: { es: "Freelancer", en: "Freelancer" },
+    period: { es: "Ene 2020 — Actualidad", en: "Jan 2020 — Present" },
+    bullets: {
+      es: [
+        "Diseño y desarrollo de sitios web a medida para emprendimientos, profesionales y pymes: sitios institucionales, e-commerce y landing pages.",
+        "Acompañamiento de punta a punta: relevamiento inicial, avances con feedback frecuente, publicación y mantenimiento.",
+        "Sitios rápidos, 100% responsive y optimizados para SEO con React, Next.js y TypeScript, como Âme Pilates y Relocation by Lambo.",
+      ],
+      en: [
+        "Custom website design and development for small businesses, professionals and entrepreneurs: business sites, e-commerce and landing pages.",
+        "End-to-end support: discovery call, frequent progress updates and feedback, launch and ongoing maintenance.",
+        "Fast, fully responsive, SEO-optimized sites built with React, Next.js and TypeScript, such as Âme Pilates and Relocation by Lambo.",
+      ],
+    },
+  },
+  {
     company: "Coderhouse",
     role: { es: "Profesora de Desarrollo Web", en: "Web Development Teacher" },
     period: { es: "Jul 2022 — Ene 2025", en: "Jul 2022 — Jan 2025" },
