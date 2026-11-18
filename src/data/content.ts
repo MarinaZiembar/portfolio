@@ -416,6 +416,21 @@ export const experience: Job[] = [
     },
   },
   {
+    company: "Coderhouse",
+    role: { es: "Profesora de Desarrollo Web", en: "Web Development Teacher" },
+    period: { es: "Jul 2022 — Ene 2025", en: "Jul 2022 — Jan 2025" },
+    bullets: {
+      es: [
+        "Curso de 2 meses sobre HTML, CSS y SASS, guiando a los estudiantes hasta un proyecto final.",
+        "Acompañamiento en la aplicación de conceptos de frontend y buenas prácticas de estilizado.",
+      ],
+      en: [
+        "2-month course on HTML, CSS and SASS, guiding students through to a final project.",
+        "Helped students apply frontend concepts and styling best practices.",
+      ],
+    },
+  },
+  {
     company: "Holaa! Soy Maru",
     role: { es: "Freelancer", en: "Freelancer" },
     period: { es: "Ene 2020 — Actualidad", en: "Jan 2020 — Present" },
@@ -429,21 +444,6 @@ export const experience: Job[] = [
         "Custom website design and development for small businesses, professionals and entrepreneurs: business sites, e-commerce and landing pages.",
         "End-to-end support: discovery call, frequent progress updates and feedback, launch and ongoing maintenance.",
         "Fast, fully responsive, SEO-optimized sites built with React, Next.js and TypeScript, such as Âme Pilates and Relocation by Lambo.",
-      ],
-    },
-  },
-  {
-    company: "Coderhouse",
-    role: { es: "Profesora de Desarrollo Web", en: "Web Development Teacher" },
-    period: { es: "Jul 2022 — Ene 2025", en: "Jul 2022 — Jan 2025" },
-    bullets: {
-      es: [
-        "Curso de 2 meses sobre HTML, CSS y SASS, guiando a los estudiantes hasta un proyecto final.",
-        "Acompañamiento en la aplicación de conceptos de frontend y buenas prácticas de estilizado.",
-      ],
-      en: [
-        "2-month course on HTML, CSS and SASS, guiding students through to a final project.",
-        "Helped students apply frontend concepts and styling best practices.",
       ],
     },
   },
