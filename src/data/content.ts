@@ -325,6 +325,7 @@ export type Job = {
   role: L;
   period: L;
   bullets: Record<Locale, string[]>;
+  link?: { href: string; label: string };
 };
 
 export const experience: Job[] = [
@@ -433,6 +434,7 @@ export const experience: Job[] = [
   {
     company: "Holaa! Soy Maru",
     role: { es: "Freelancer", en: "Freelancer" },
+    link: { href: "https://holaasoymaru.com.ar", label: "holaasoymaru.com.ar" },
     period: { es: "Ene 2020 — Actualidad", en: "Jan 2020 — Present" },
     bullets: {
       es: [

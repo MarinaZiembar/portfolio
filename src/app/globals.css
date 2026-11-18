@@ -1712,3 +1712,12 @@ main,
     scroll-behavior: auto !important;
   }
 }
+
+.job__link {
+  color: var(--red, #e63b2a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.job__link:hover {
+  text-decoration-thickness: 2px;
+}

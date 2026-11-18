@@ -42,6 +42,13 @@ export default function Experience() {
                       {job.bullets[lang].map((b) => (
                         <li key={b}>{b}</li>
                       ))}
+                      {job.link && (
+                        <li>
+                          <a href={job.link.href} target="_blank" rel="noreferrer" className="job__link">
+                            {job.link.label} ↗
+                          </a>
+                        </li>
+                      )}
                     </ul>
                   </div>
                 </div>
