@@ -330,37 +330,38 @@ function Carousel({ items }: { items: Project[] }) {
 
 function ProjectCard({ project: p, number, focusable }: { project: Project; number: number; focusable: boolean }) {
   const { tr } = useLang();
+  const page = `/proyectos/${p.slug}`;
+  const tab = focusable ? 0 : -1;
   return (
-    <a
-      href={p.href}
-      className="card"
-      draggable={false}
-      tabIndex={focusable ? 0 : -1}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <div className="card__art">
+    <article className="card">
+      <a href={page} className="card__art" draggable={false} tabIndex={-1} aria-hidden="true">
         <ProjectArt seed={p.seed} title={p.title} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="card__logo" src={p.logo} alt="" draggable={false} loading="lazy" />
         <span className="card__index">{String(number).padStart(2, "0")}</span>
-      </div>
+      </a>
       <div className="card__meta">
         <h3>
-          {p.title}
-          <span className="card__arrow" aria-hidden="true">
-            ↗
-          </span>
+          <a href={page} className="card__title" draggable={false} tabIndex={tab}>
+            {p.title}
+            <span className="card__arrow" aria-hidden="true">
+              →
+            </span>
+          </a>
         </h3>
         <p className="card__client">{p.client ? `${p.client} · ${tr(p.period)}` : tr(p.period)}</p>
         {p.description && <p className="card__desc">{tr(p.description)}</p>}
-        <p className="card__link">{tr(p.linkLabel)}</p>
+        <p className="card__link">
+          <a href={p.href} target="_blank" rel="noreferrer" draggable={false} tabIndex={tab}>
+            {tr(p.linkLabel)} ↗
+          </a>
+        </p>
         <ul className="card__tags">
           {[...p.types, ...p.stack].map((tag) => (
             <li key={tag}>{tr(tagLabels[tag])}</li>
           ))}
         </ul>
       </div>
-    </a>
+    </article>
   );
 }

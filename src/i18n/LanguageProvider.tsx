@@ -28,7 +28,7 @@ type Ctx = {
 
 const LanguageContext = createContext<Ctx | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+export function LanguageProvider({ children, title }: { children: ReactNode; title?: L }) {
   const [lang, setLangState] = useState<Locale>("es");
   const [switching, setSwitching] = useState(false);
 
@@ -44,8 +44,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.title = titles[lang];
-  }, [lang]);
+    document.title = title ? `${title[lang]} — Marina Ziembar` : titles[lang];
+  }, [lang, title]);
 
   const setLang = useCallback(
     (l: Locale) => {

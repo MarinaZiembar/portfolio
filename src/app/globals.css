@@ -1013,9 +1013,6 @@ main,
 }
 .card__meta h3 {
   margin: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
   font-size: clamp(22px, 2vw, 28px);
   font-weight: 400;
   letter-spacing: -0.03em;
@@ -1025,8 +1022,16 @@ main,
   color: var(--red);
   transition: transform 0.5s var(--ease);
 }
+.card__title {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.card__art {
+  display: block;
+}
 .card:hover .card__arrow {
-  transform: translate(4px, -4px) rotate(45deg);
+  transform: translateX(6px);
 }
 .card__client {
   margin: 6px 0 8px;
@@ -1720,4 +1725,183 @@ main,
 }
 .job__link:hover {
   text-decoration-thickness: 2px;
+}
+
+/* ── Subpágina de proyecto ────────────────── */
+
+.pdetail {
+  padding: clamp(120px, 14vw, 180px) 0 clamp(72px, 9vw, 140px);
+}
+.pdetail__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  font-size: 14px;
+  font-weight: 500;
+}
+.pdetail__back {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.pdetail__back span[aria-hidden] {
+  color: var(--red);
+  transition: transform 0.5s var(--ease);
+}
+.pdetail__back:hover span[aria-hidden] {
+  transform: translateX(-4px);
+}
+.pdetail__count {
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+.pdetail__count strong {
+  color: var(--red);
+  font-weight: 500;
+}
+.pdetail__title {
+  margin: 0 0 clamp(32px, 4vw, 56px);
+  font-size: clamp(48px, 9vw, 150px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+  overflow-wrap: anywhere;
+}
+.pdetail__dot {
+  color: var(--red);
+}
+.pdetail__art {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 8;
+  background: var(--paper-2);
+}
+.pdetail__art .art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+.pdetail__art .art__piece {
+  transition-duration: 1.6s;
+}
+.pdetail__art.is-in .art__piece {
+  transform: rotate(var(--spin));
+}
+.pdetail__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(140px, 26%, 320px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid var(--paper);
+  box-shadow: 0 20px 44px -16px rgba(17, 17, 17, 0.45);
+  transform: translate(-50%, -50%) scale(0.86) rotate(-8deg);
+  transition: transform 1.2s var(--ease) 0.25s;
+}
+.pdetail__art.is-in .pdetail__logo {
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+.pdetail__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  padding: clamp(40px, 6vw, 80px) 0;
+  border-bottom: 1px solid #d8d6d1;
+}
+.pdetail__kicker {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--red);
+}
+.pdetail__text {
+  margin: 0 0 32px;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 300;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+.pdetail__meta {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pdetail__meta > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid #d8d6d1;
+}
+.pdetail__meta > div:last-child {
+  border-bottom: 1px solid #d8d6d1;
+}
+.pdetail__meta dt {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.pdetail__meta dd {
+  margin: 0;
+  font-size: 16px;
+}
+.pdetail__url {
+  color: var(--red);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.pdetail__url:hover {
+  text-decoration-thickness: 2px;
+}
+.pdetail__next {
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(40px, 6vw, 72px);
+}
+.pdetail__next .pdetail__kicker {
+  margin-bottom: 8px;
+}
+.pdetail__next-title {
+  font-size: clamp(36px, 6vw, 96px);
+  font-weight: 200;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  transition: color 0.3s;
+}
+.pdetail__next-arrow {
+  display: inline-block;
+  color: var(--red);
+  transition: transform 0.5s var(--ease);
+}
+.pdetail__next:hover .pdetail__next-title {
+  color: var(--red);
+}
+.pdetail__next:hover .pdetail__next-arrow {
+  transform: translateX(12px);
+}
+@media (max-width: 820px) {
+  .pdetail__body {
+    grid-template-columns: 1fr;
+  }
+  .pdetail__art {
+    aspect-ratio: 4 / 3;
+  }
+  .pdetail__meta > div:last-child {
+    border-bottom: 0;
+  }
+}
+@media (max-width: 600px) {
+  .pdetail__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pdetail__meta > div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
 }

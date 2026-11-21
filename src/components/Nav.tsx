@@ -5,12 +5,12 @@ import { RollText } from "./ui";
 import LanguageSwitch from "@/i18n/LanguageSwitch";
 import { useLang } from "@/i18n/LanguageProvider";
 
-export default function Nav() {
+export default function Nav({ base = "" }: { base?: string }) {
   const { t } = useLang();
   const links = [
-    { href: "#sobre-mi", label: t.nav.about },
-    { href: "#trabajos", label: t.nav.works },
-    { href: "#experiencia", label: t.nav.experience },
+    { href: `${base}#sobre-mi`, label: t.nav.about },
+    { href: `${base}#trabajos`, label: t.nav.works },
+    { href: `${base}#experiencia`, label: t.nav.experience },
     { href: "#contacto", label: t.nav.contact },
   ];
   const [hidden, setHidden] = useState(false);
@@ -37,7 +37,7 @@ export default function Nav() {
   return (
     <>
       <header className={`nav ${hidden && !open ? "nav--hidden" : ""} ${scrolled && !open ? "nav--scrolled" : ""} ${open ? "nav--menu" : ""}`}>
-        <a href="#top" className="nav__logo" aria-label={t.navAria.home}>
+        <a href={base ? "/" : "#top"} className="nav__logo" aria-label={t.navAria.home}>
           <span className="logo-mark" aria-hidden="true">
             <i className="logo-mark__circle" />
             <i className="logo-mark__square" />

@@ -68,6 +68,19 @@ export const ui = {
       cv: "Descargar CV",
     },
     footer: { social: "Redes", top: "Volver arriba ↑", credit: "Diseñado y desarrollado por Marina." },
+    project: {
+      back: "Volver a trabajos",
+      label: "Proyecto",
+      about: "Sobre el proyecto",
+      site: "Sitio",
+      visit: "Visitar el sitio",
+      tech: "Tecnologías",
+      type: "Tipo",
+      client: "Cliente",
+      date: "Fecha",
+      next: "Siguiente proyecto",
+      notFound: "Proyecto no encontrado",
+    },
   },
   en: {
     nav: { about: "About.", works: "Works.", experience: "Experience.", contact: "Contact." },
@@ -105,6 +118,19 @@ export const ui = {
       cv: "Download CV",
     },
     footer: { social: "Social", top: "Back to top ↑", credit: "Designed and built by Marina." },
+    project: {
+      back: "Back to works",
+      label: "Project",
+      about: "About the project",
+      site: "Website",
+      visit: "Visit the website",
+      tech: "Technologies",
+      type: "Type",
+      client: "Client",
+      date: "Date",
+      next: "Next project",
+      notFound: "Project not found",
+    },
   },
 } satisfies Record<Locale, unknown>;
 
@@ -213,7 +239,8 @@ export type Project = {
   title: string;
   client?: string; // empresa dueña del proyecto (si no hay, se muestra solo la fecha)
   period: L;
-  description?: L; // opcional: una línea sobre el proyecto
+  description?: L; // opcional: una línea sobre el proyecto (se ve en la card)
+  details: L; // texto de la subpágina del proyecto
   types: ProjectType[];
   stack: Stack[];
   href: string;
@@ -234,6 +261,10 @@ export const projects: Project[] = [
     href: "https://umarket.com.py/es",
     linkLabel: { es: "umarket.com.py", en: "umarket.com.py" },
     logo: "/projects/umarket.png",
+    details: {
+      es: "Marketplace online de Paraguay, desarrollado en itti. Participé en sentar sus bases desde cero junto al líder técnico y el manager de ingeniería, construyendo un frontend escalable con React, Next.js y TypeScript, pensado para crecer y mantener una experiencia consistente.",
+      en: "An online marketplace in Paraguay, built at itti. I helped lay its foundations from scratch alongside the tech lead and the engineering manager, building a scalable frontend with React, Next.js and TypeScript, designed to grow while keeping a consistent experience.",
+    },
     seed: 7,
   },
   {
@@ -245,6 +276,10 @@ export const projects: Project[] = [
     href: "https://a11yze.vercel.app",
     linkLabel: { es: "a11yze.vercel.app", en: "a11yze.vercel.app" },
     logo: "/projects/a11yze.png",
+    details: {
+      es: "Herramienta que analiza la accesibilidad de cualquier sitio web a partir de su URL, siguiendo los fundamentos de la W3C WAI. Separa el análisis en mobile y desktop y está disponible en español e inglés.",
+      en: "A tool that analyzes the accessibility of any website from its URL, following the W3C WAI fundamentals. It runs separate mobile and desktop reports and is available in Spanish and English.",
+    },
     seed: 19,
   },
   {
@@ -256,6 +291,10 @@ export const projects: Project[] = [
     href: "https://holaasoymaru.com.ar",
     linkLabel: { es: "holaasoymaru.com.ar", en: "holaasoymaru.com.ar" },
     logo: "/projects/holaasoymaru.png",
+    details: {
+      es: "La landing de mi emprendimiento freelance de desarrollo web. Presenta los servicios —sitio institucional, e-commerce y sitio a medida—, el proceso de trabajo y los proyectos realizados, con identidad propia: composiciones geométricas animadas, colores de acento y un tono cercano. Bilingüe, en español e inglés.",
+      en: "The landing page for my freelance web development business. It presents the services —business sites, e-commerce and custom sites—, the work process and past projects, with its own identity: animated geometric compositions, accent colors and a friendly tone. Bilingual, in Spanish and English.",
+    },
     seed: 17,
   },
   {
@@ -267,6 +306,10 @@ export const projects: Project[] = [
     href: "https://expediente-ueno.vercel.app",
     linkLabel: { es: "expediente-ueno.vercel.app", en: "expediente-ueno.vercel.app" },
     logo: "/projects/ueno.png",
+    details: {
+      es: "Una investigación periodística sobre el caso ueno bank en Paraguay, contada como un póster interactivo, con las novedades del caso hora a hora.",
+      en: "A journalistic investigation into the ueno bank case in Paraguay, told as an interactive poster, with updates on the case hour by hour.",
+    },
     seed: 13,
   },
   {
@@ -278,6 +321,10 @@ export const projects: Project[] = [
     href: "https://www.amepilates.com.ar",
     linkLabel: { es: "amepilates.com.ar", en: "amepilates.com.ar" },
     logo: "/projects/ame.png",
+    details: {
+      es: "El sitio de un estudio de pilates y body ballet: elegante, simple y a medida. Diseño y desarrollo propios, responsive y rápido.",
+      en: "The website for a pilates and body ballet studio: elegant, simple and custom-made. Designed and built from scratch, responsive and fast.",
+    },
     seed: 3,
   },
   {
@@ -289,6 +336,10 @@ export const projects: Project[] = [
     href: "https://www.relocationbylambo.com.ar",
     linkLabel: { es: "relocationbylambo.com.ar", en: "relocationbylambo.com.ar" },
     logo: "/projects/relocation.png",
+    details: {
+      es: "Sitio para un servicio de relocation: claro, confiable y fácil de navegar. Desarrollado a medida con Next.js y Tailwind, con v0 para iterar la interfaz.",
+      en: "A website for a relocation service: clear, trustworthy and easy to navigate. Custom-built with Next.js and Tailwind, using v0 to iterate on the interface.",
+    },
     seed: 11,
   },
   {
@@ -301,6 +352,10 @@ export const projects: Project[] = [
     href: "https://play.google.com/store/apps/details?id=com.precompra&hl=es_AR",
     linkLabel: { es: "Google Play", en: "Google Play" },
     logo: "/projects/precompra.png",
+    details: {
+      es: "App mobile desarrollada en Creativedog con React Native y publicada en Google Play.",
+      en: "A mobile app built at Creativedog with React Native and published on Google Play.",
+    },
     seed: 21,
   },
   {
@@ -313,6 +368,10 @@ export const projects: Project[] = [
     href: "https://separadosconwilas.com",
     linkLabel: { es: "separadosconwilas.com", en: "separadosconwilas.com" },
     logo: "/projects/separados.png",
+    details: {
+      es: "Sitio web desarrollado en Creativedog con React y Next.js.",
+      en: "A website built at Creativedog with React and Next.js.",
+    },
     seed: 5,
   },
   {
@@ -325,6 +384,10 @@ export const projects: Project[] = [
     href: "https://play.google.com/store/apps/details?id=com.findpetapp.app&hl=es_AR",
     linkLabel: { es: "Google Play", en: "Google Play" },
     logo: "/projects/findpet.png",
+    details: {
+      es: "App para ayudar a encontrar mascotas perdidas, desarrollada en Creativedog con React Native y publicada en Google Play.",
+      en: "An app that helps find lost pets, built at Creativedog with React Native and published on Google Play.",
+    },
     seed: 17,
   },
 ];
