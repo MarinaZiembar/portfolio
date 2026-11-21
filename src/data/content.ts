@@ -237,6 +237,17 @@ export const projects: Project[] = [
     seed: 7,
   },
   {
+    slug: "a11yze",
+    title: "A11yze",
+    period: { es: "Nov 2026", en: "Nov 2026" },
+    types: ["websites"],
+    stack: ["react", "next", "typescript", "tailwind"],
+    href: "https://a11yze.vercel.app",
+    linkLabel: { es: "a11yze.vercel.app", en: "a11yze.vercel.app" },
+    logo: "/projects/a11yze.png",
+    seed: 19,
+  },
+  {
     slug: "hola-soy-maru",
     title: "Hola soy Maru",
     period: { es: "Nov 2026", en: "Nov 2026" },
