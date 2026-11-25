@@ -313,6 +313,21 @@ export const projects: Project[] = [
     seed: 13,
   },
   {
+    slug: "kromos-laboratorio",
+    title: "Kromos Laboratorio",
+    period: { es: "Nov 2026", en: "Nov 2026" },
+    types: ["websites"],
+    stack: ["react", "next", "typescript"],
+    href: "https://www.kromoslab.com.ar",
+    linkLabel: { es: "kromoslab.com.ar", en: "kromoslab.com.ar" },
+    logo: "/projects/kromos.png",
+    details: {
+      es: "Rediseño del sitio de un laboratorio de citogenética: moderno, sencillo y confiable. Conserva la identidad de marca y toda la información original, reorganizada para que sea más clara y fácil de recorrer, con un tono cercano y animaciones sutiles.",
+      en: "A redesign of a cytogenetics laboratory's website: modern, simple and trustworthy. It keeps the brand identity and all the original information, reorganized to be clearer and easier to browse, with a friendly tone and subtle animations.",
+    },
+    seed: 23,
+  },
+  {
     slug: "ame-pilates",
     title: "Âme Pilates Body Ballet",
     period: { es: "Jun 2026", en: "Jun 2026" },
