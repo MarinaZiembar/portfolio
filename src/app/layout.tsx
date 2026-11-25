@@ -10,6 +10,7 @@ const sans = Inter_Tight({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://marina-ziembar.vercel.app"),
   // No indexar en buscadores (Google, etc.)
   robots: {
     index: false,
@@ -24,6 +25,10 @@ export const metadata: Metadata = {
     description: "Experiencias web pulidas e interactivas, donde el diseño y el código trabajan juntos.",
     locale: "es_AR",
     type: "website",
+    siteName: "Marina Ziembar",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
