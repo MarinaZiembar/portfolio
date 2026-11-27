@@ -328,6 +328,21 @@ export const projects: Project[] = [
     seed: 23,
   },
   {
+    slug: "maxima-srl",
+    title: "Máxima srl",
+    period: { es: "Nov 2026", en: "Nov 2026" },
+    types: ["websites"],
+    stack: ["react", "next", "typescript", "tailwind"],
+    href: "https://maximasrl.com.ar",
+    linkLabel: { es: "maximasrl.com.ar", en: "maximasrl.com.ar" },
+    logo: "/projects/maxima.png",
+    details: {
+      es: "Sitio institucional de una empresa metalúrgica que fabrica máquinas especiales. Lo migré de WordPress a un sitio estático con Next.js: catálogo de productos y novedades que se cargan desde una base de datos MySQL, formulario de contacto con protección antispam y redirecciones de las URLs viejas para no perder posicionamiento.",
+      en: "The corporate website of a metalworking company that builds custom machinery. I migrated it from WordPress to a static Next.js site: a product catalog and news section loaded from a MySQL database, a spam-protected contact form, and redirects from the old URLs to preserve search rankings.",
+    },
+    seed: 29,
+  },
+  {
     slug: "ame-pilates",
     title: "Âme Pilates Body Ballet",
     period: { es: "Jun 2026", en: "Jun 2026" },
